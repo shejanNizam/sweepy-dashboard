@@ -36,7 +36,7 @@ const MyProfile = () => {
             onClick={() => setIsModalOpen(true)}
             size="large"
             type="default"
-            className="px-8 text-black bg-button font-semibold"
+            className="px-8 text-white bg-button font-semibold"
           >
             Change Password
           </Button>

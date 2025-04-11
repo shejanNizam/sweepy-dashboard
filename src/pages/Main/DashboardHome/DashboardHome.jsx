@@ -75,6 +75,10 @@ export default function DashboardHome() {
             </div>
           </div>
         </LoaderWraperComp>
+        {/* chart heer */}
+        <div className="text-center py-20">
+          <h2> Here show chart </h2>
+        </div>
         <div className="flex flex-col lg:flex-row justify-center items-start gap-4 md:gap-6">
           <div className="w-full lg:w-1/2">
             <DashboardChart />
@@ -82,6 +86,11 @@ export default function DashboardHome() {
           <div className="w-full lg:w-1/2">
             <RecentUser />
           </div>
+        </div>
+
+        {/* chart here*/}
+        <div>
+          <h2 className="text-center py-20"> Here show chart </h2>
         </div>
       </div>
     </>

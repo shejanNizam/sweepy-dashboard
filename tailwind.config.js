@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#F17F0C",
-        secondary: "#FBD7B4",
-        hash: "#FBD7B4",
-        info: "#FBD7B4",
-        button: "#F17F0C",
-        playground: "#E8BD56",
+        primary: "#363636",
+        secondary: "#EBEBEB",
+        hash: "#EBEBEB",
+        info: "#363636",
+        button: "#363636",
+        playground: "#363636",
         "light-gray": "#E7F8FF",
         "green-playground": "#00C38A",
       },

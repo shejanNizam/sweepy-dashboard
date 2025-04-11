@@ -23,8 +23,8 @@ const SubMenu = ({ children, isOpen, rootPath, location, openName, name }) => (
         to={subPath}
         className={({ isActive }) =>
           isActive
-            ? "bg-button text-black w-full px-4 py-1 flex items-center justify-start gap-3 transition-all rounded-lg"
-            : "text-black hover:text-black hover:bg-button w-full px-4 py-1 flex items-center justify-start gap-3 transition-all rounded-lg"
+            ? "bg-button text-white w-full px-4 py-1 flex items-center justify-start gap-3 transition-all rounded-lg"
+            : "text-black hover:text-white hover:bg-button w-full px-4 py-1 flex items-center justify-start gap-3 transition-all rounded-lg"
         }
       >
         <div>{createElement(subIcon, { size: "17" })}</div>
@@ -60,8 +60,8 @@ const Sidebar = () => {
     <div className="fixed top-0 left-0 w-[326px] min-h-screen h-full p-6 pr-0">
       <div className="h-full flex flex-col justify-between bg-hash pt-[50px] border drop-shadow rounded-lg">
         {/* Logo */}
-        <div className="px-[38px]">
-          <img className="w-[60%] mx-auto" src={logo} alt="Logo" />
+        <div className="">
+          <img className="w-[30%] mx-auto" src={logo} alt="Logo" />
         </div>
 
         {/* Navigation Links */}
@@ -78,9 +78,9 @@ const Sidebar = () => {
                       }))
                     }
                     className={cn(
-                      "outline-none hover:text-black hover:bg-button w-full px-4 py-3 flex items-center justify-between gap-3 text-lg transition-all rounded-lg",
+                      "outline-none hover:text-white hover:bg-button w-full px-4 py-3 flex items-center justify-between gap-3 text-lg transition-all rounded-lg",
                       {
-                        "bg-button text-black":
+                        "bg-button text-white":
                           name === openName?.name ||
                           (location.pathname.includes(rootPath) &&
                             !openName.name),
@@ -116,8 +116,8 @@ const Sidebar = () => {
                     to={path}
                     className={({ isActive }) =>
                       isActive
-                        ? "bg-button text-black w-full px-4 py-3 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
-                        : "hover:text-black text-[20px] hover:bg-button w-full px-4 py-3 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
+                        ? "bg-button text-white w-full px-4 py-3 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
+                        : "hover:text-white text-[20px] hover:bg-button w-full px-4 py-2 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
                     }
                   >
                     <div>{createElement(icon, { size: "20" })}</div>
@@ -132,7 +132,7 @@ const Sidebar = () => {
         <div className="p-[24px]">
           <button
             onClick={handleLogOut}
-            className="bg-[#E8EAEF] text-black w-full px-10 py-4 flex justify-center items-center gap-2 rounded-lg text-xl"
+            className="bg-[#65676d] text-black w-full px-10 py-4 flex justify-center items-center gap-2 rounded-lg text-xl"
           >
             <BiLogOut className="text-[#FF5252]" size={20} />
             <span>Logout</span>

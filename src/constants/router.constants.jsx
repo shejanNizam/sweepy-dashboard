@@ -1,21 +1,19 @@
 import React from "react";
-import { BiCategoryAlt, BiMessage } from "react-icons/bi";
 import { CiSettings, CiUser } from "react-icons/ci";
-import { FaUsers } from "react-icons/fa";
 import { FaServicestack } from "react-icons/fa6";
-import {
-  MdOutlineAdminPanelSettings,
-  MdOutlineSecurityUpdateWarning,
-} from "react-icons/md";
-import { RiApps2AddLine, RiDashboardHorizontalFill } from "react-icons/ri";
-import AddVenue from "../pages/Main/AddVenue/AddVenue";
-import AllVenue from "../pages/Main/AllVenue/AllVenue";
-import BeauticianDetails from "../pages/Main/Beautician/BeauticianDetails";
+import { GrMoney } from "react-icons/gr";
+import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
+import { PiUsersThree } from "react-icons/pi";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
+import Advertisement from "../pages/Main/Advertisement/Advertisement";
+import Assistant from "../pages/Main/Assistant/Assistant";
+import AvailableSweep from "../pages/Main/AvailableSweep/AvailableSweep";
+import Category from "../pages/Main/Category/Category";
 import Client from "../pages/Main/Client/Client";
+import CompleteSweep from "../pages/Main/CompleteSweep/CompleteSweep";
 import DashboardHome from "../pages/Main/DashboardHome/DashboardHome";
 import EarningHistory from "../pages/Main/EarningHistory/EarningHistory";
 import Notifications from "../pages/Main/Notifications/Notifications";
-import VenueRequest from "../pages/Main/VenueRequest/VenueRequest";
 import EditMyProfile from "../pages/Profile/EditMyProfile";
 import MyProfile from "../pages/Profile/MyProfile";
 import About from "../pages/Settings/About";
@@ -24,8 +22,6 @@ import EditPrivacyPolicy from "../pages/Settings/EditPrivacyPolicy";
 import EditTermsConditions from "../pages/Settings/EditTermsConditions";
 import PrivacyPolicy from "../pages/Settings/PrivacyPolicy";
 import TermsConditions from "../pages/Settings/TermsConditions";
-import { GrMoney } from "react-icons/gr";
-import { PiUsersThree } from "react-icons/pi";
 // import Support from "../pages/Support/Support";
 
 export const dashboardItems = [
@@ -40,10 +36,34 @@ export const dashboardItems = [
     element: <Notifications />,
   },
   {
-    name: "All Users",
+    name: "Complete Sweep",
+    path: "complete-sweep",
+    icon: PiUsersThree,
+    element: <CompleteSweep />,
+  },
+  {
+    name: "Available Sweep",
+    path: "available-sweep",
+    icon: PiUsersThree,
+    element: <AvailableSweep />,
+  },
+  {
+    name: "Category",
+    path: "category",
+    icon: PiUsersThree,
+    element: <Category />,
+  },
+  {
+    name: "Users",
     path: "client",
     icon: PiUsersThree,
     element: <Client />,
+  },
+  {
+    name: "Advertisement",
+    path: "advertisement",
+    icon: PiUsersThree,
+    element: <Advertisement />,
   },
   {
     name: "Earnings",
@@ -52,9 +72,21 @@ export const dashboardItems = [
     element: <EarningHistory />,
   },
   {
-    path: "/beautician/:profileId",
-    element: <BeauticianDetails />,
+    name: "Suggestion",
+    path: "suggestion",
+    icon: GrMoney,
+    element: <Advertisement />,
   },
+  {
+    name: "Assistant",
+    path: "assistant",
+    icon: GrMoney,
+    element: <Assistant />,
+  },
+  // {
+  //   path: "/beautician/:profileId",
+  //   element: <BeauticianDetails />,
+  // },
   // {
   //   name: "Earnings",
   //   rootPath: "earnings",
@@ -74,24 +106,24 @@ export const dashboardItems = [
   //     // },
   //   ],
   // },
-  {
-    name: "Venue Request",
-    path: "venue",
-    icon: BiMessage,
-    element: <VenueRequest />,
-  },
-  {
-    name: "All Venue",
-    path: "all-venue",
-    icon: BiCategoryAlt,
-    element: <AllVenue />,
-  },
-  {
-    name: "Add Venue",
-    path: "add-venue",
-    icon: RiApps2AddLine,
-    element: <AddVenue />,
-  },
+  // {
+  //   name: "Venue Request",
+  //   path: "venue",
+  //   icon: BiMessage,
+  //   element: <VenueRequest />,
+  // },
+  // {
+  //   name: "All Venue",
+  //   path: "all-venue",
+  //   icon: BiCategoryAlt,
+  //   element: <AllVenue />,
+  // },
+  // {
+  //   name: "Add Venue",
+  //   path: "add-venue",
+  //   icon: RiApps2AddLine,
+  //   element: <AddVenue />,
+  // },
   {
     name: "Settings",
     rootPath: "settings",

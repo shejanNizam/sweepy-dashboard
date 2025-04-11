@@ -5,7 +5,7 @@ export const mainTheme = {
   },
   components: {
     Button: {
-      colorPrimary: "#FF5722",
+      colorPrimary: "#363636",
       colorTextDisabled: "#000000",
       colorPrimaryHover: "#FF3B21",
       colorPrimaryActive: "#DEAD35",
