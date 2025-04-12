@@ -8,6 +8,7 @@ import { RiDashboardHorizontalFill } from "react-icons/ri";
 import Advertisement from "../pages/Main/Advertisement/Advertisement";
 import Assistant from "../pages/Main/Assistant/Assistant";
 import AvailableSweep from "../pages/Main/AvailableSweep/AvailableSweep";
+import SweepstakesDetails from "../pages/Main/AvailableSweep/SweepstakesDetails";
 import Category from "../pages/Main/Category/Category";
 import Client from "../pages/Main/Client/Client";
 import CompleteSweep from "../pages/Main/CompleteSweep/CompleteSweep";
@@ -51,6 +52,10 @@ export const dashboardItems = [
     path: "available-sweep",
     icon: PiUsersThree,
     element: <AvailableSweep />,
+  },
+  {
+    path: "available-sweep/:id",
+    element: <SweepstakesDetails />,
   },
   {
     name: "Category",

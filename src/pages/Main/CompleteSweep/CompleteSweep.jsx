@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export default function CompleteSweep() {
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 20 });
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
   const [searchName, setSearchName] = useState("");
 
   const navigate = useNavigate(); // Initialize useNavigate
@@ -40,7 +40,7 @@ export default function CompleteSweep() {
     });
   };
 
-  const handleShowDetails = (id) => {
+  const handleShowWinnerList = (id) => {
     // Use navigate to go to the winner details page and pass the id as part of the URL
     navigate(`/complete-sweep/${id}`);
   };
@@ -91,7 +91,7 @@ export default function CompleteSweep() {
         <Button
           type="primary"
           shape="round"
-          onClick={() => handleShowDetails(record.id)} // Pass id to navigate
+          onClick={() => handleShowWinnerList(record.id)} // Pass id to navigate
         >
           {record.winner}
         </Button>
@@ -126,7 +126,7 @@ export default function CompleteSweep() {
           pageSize: pagination.pageSize,
           total: data.length,
           showSizeChanger: true,
-          pageSizeOptions: ["20", "30", "40", "50"],
+          pageSizeOptions: ["5", "10", "20", "30", "40", "50"],
         }}
         onChange={handleTableChange}
         className="mt-4"
