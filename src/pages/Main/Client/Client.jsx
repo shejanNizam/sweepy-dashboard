@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   DatePicker,
   Form,
@@ -10,6 +11,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
+import { FaFacebook, FaInstagram } from "react-icons/fa"; // Importing icons for social media
 import { IoSearch } from "react-icons/io5";
 
 export default function Client() {
@@ -20,6 +22,7 @@ export default function Client() {
   const [date, setDate] = useState("");
   const [form] = Form.useForm();
 
+  // Dummy data for users
   const data = {
     data: [
       {
@@ -27,12 +30,17 @@ export default function Client() {
         name: "Robert Marc",
         email: "RobertMarc@gmail.com",
         createdAt: "2025-01-01",
+        phone: "+8801634425758",
+
+        profileImage: "https://via.placeholder.com/150",
       },
       {
         id: "1234568",
         name: "John Doe",
         email: "JohnDoe@gmail.com",
         createdAt: "2025-02-01",
+        phone: "+8801634425759",
+        profileImage: "https://via.placeholder.com/150",
       },
     ],
     pagination: { totalData: 40 },
@@ -71,7 +79,7 @@ export default function Client() {
           shape="round"
           className="px-0 py-0 text-white"
         >
-          Add Point
+          View Profile
         </Button>
       ),
     },
@@ -80,12 +88,6 @@ export default function Client() {
   const showModal = (data) => {
     setIsModalOpen(true);
     setModalData(data);
-  };
-
-  const handleAddPoints = (values) => {
-    console.log("Form submitted with values: ", values);
-    setIsModalOpen(false);
-    form.resetFields();
   };
 
   const onChangeDate = (date, dateString) => {
@@ -165,39 +167,42 @@ export default function Client() {
         />
       </div>
 
+      {/* Modal for user details */}
       <Modal
-        title={
-          <span className="text-button font-bold text-2xl"> Add Point </span>
-        }
+        title={`User Information - ${modalData.name}`}
         visible={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
-        footer={null}
-        width={400}
+        footer={[
+          <Button key="back" onClick={() => setIsModalOpen(false)}>
+            OK
+          </Button>,
+        ]}
         centered
+        width={500}
       >
-        <Form
-          form={form}
-          onFinish={handleAddPoints}
-          initialValues={{ totalDollar: "", pointPrice: "" }}
-        >
-          <Form.Item
-            label="Total Dollar"
-            name="totalDollar"
-            rules={[{ required: true, message: "Please enter total dollar!" }]}
-          >
-            <Input type="number" placeholder="Total Dollar" />
-          </Form.Item>
-          <Form.Item
-            label="Point Price"
-            name="pointPrice"
-            rules={[{ required: true, message: "Please enter point price!" }]}
-          >
-            <Input type="number" placeholder="Point Price" />
-          </Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            Add
-          </Button>
-        </Form>
+        <div className="flex justify-center">
+          <Avatar src={modalData?.profileImage} size={80} />
+        </div>
+
+        <div className="space-y-4">
+          <p>
+            <strong>SI No.:</strong> #{modalData.id}
+          </p>
+          <p>
+            <strong>Full Name:</strong> {modalData.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {modalData.email}
+          </p>
+          <p>
+            <strong>Phone:</strong> {modalData.phone}
+          </p>
+
+          <div className="flex justify-center gap-4 mt-4">
+            <Button shape="circle" icon={<FaFacebook />} />
+            <Button shape="circle" icon={<FaInstagram />} />
+          </div>
+        </div>
       </Modal>
     </>
   );

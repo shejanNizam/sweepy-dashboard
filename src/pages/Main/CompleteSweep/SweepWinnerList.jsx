@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import PageHeading from "../../../Components/PageHeading";
+import { FaFacebook, FaInstagram } from "react-icons/fa6";
 
 export default function SweepWinnerList() {
   const { id } = useParams(); // Extract the ID from the URL
@@ -156,11 +157,8 @@ export default function SweepWinnerList() {
             <strong>Phone:</strong> {selectedWinner?.phone}
           </p>
           <div className="flex justify-center gap-4 mt-4">
-            <Button shape="circle" icon={<i className="fab fa-facebook"></i>} />
-            <Button
-              shape="circle"
-              icon={<i className="fab fa-instagram"></i>}
-            />
+            <Button shape="circle" icon={<FaFacebook />} />
+            <Button shape="circle" icon={<FaInstagram />} />
           </div>
         </div>
       </Modal>
