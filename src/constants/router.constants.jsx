@@ -11,6 +11,7 @@ import AvailableSweep from "../pages/Main/AvailableSweep/AvailableSweep";
 import Category from "../pages/Main/Category/Category";
 import Client from "../pages/Main/Client/Client";
 import CompleteSweep from "../pages/Main/CompleteSweep/CompleteSweep";
+import SweepWinnerList from "../pages/Main/CompleteSweep/SweepWinnerList";
 import DashboardHome from "../pages/Main/DashboardHome/DashboardHome";
 import EarningHistory from "../pages/Main/EarningHistory/EarningHistory";
 import Notifications from "../pages/Main/Notifications/Notifications";
@@ -40,6 +41,10 @@ export const dashboardItems = [
     path: "complete-sweep",
     icon: PiUsersThree,
     element: <CompleteSweep />,
+  },
+  {
+    path: "complete-sweep/:id",
+    element: <SweepWinnerList />,
   },
   {
     name: "Available Sweep",
