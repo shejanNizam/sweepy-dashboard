@@ -13,6 +13,14 @@ export default function Advertisement() {
       id: 2,
       image: "https://via.placeholder.com/150?text=Keep+Exploring",
     },
+    {
+      id: 3,
+      image: "https://via.placeholder.com/150?text=CoinView",
+    },
+    {
+      id: 4,
+      image: "https://via.placeholder.com/150?text=Keep+Exploring",
+    },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentAd, setCurrentAd] = useState(null);

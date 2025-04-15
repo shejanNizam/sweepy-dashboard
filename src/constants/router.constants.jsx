@@ -16,6 +16,7 @@ import SweepWinnerList from "../pages/Main/CompleteSweep/SweepWinnerList";
 import DashboardHome from "../pages/Main/DashboardHome/DashboardHome";
 import EarningHistory from "../pages/Main/EarningHistory/EarningHistory";
 import Notifications from "../pages/Main/Notifications/Notifications";
+import Suggestion from "../pages/Main/Suggestion/Suggestion";
 import EditMyProfile from "../pages/Profile/EditMyProfile";
 import MyProfile from "../pages/Profile/MyProfile";
 import About from "../pages/Settings/About";
@@ -85,7 +86,7 @@ export const dashboardItems = [
     name: "Suggestion",
     path: "suggestion",
     icon: GrMoney,
-    element: <Advertisement />,
+    element: <Suggestion />,
   },
   {
     name: "Assistant",

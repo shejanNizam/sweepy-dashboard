@@ -11,26 +11,20 @@ export default function EarningHistory() {
   const data = {
     data: [
       {
-        id: "1234567",
-        email: "example@gmail.com",
-        paymentType: "Card",
-        createdAt: "2025-02-25T16:15:00",
-        amount: "90.00",
+        id: "1234",
+        email: "raki123@gmail.com",
+        acNumber: "******** 4852",
+        createdAt: "2024-02-25T16:15:00",
+        amount: "9.00",
       },
       {
-        id: "1234568",
-        email: "another@example.com",
-        paymentType: "Point",
-        createdAt: "2025-02-25T16:20:00",
-        amount: "80.00",
+        id: "1234",
+        email: "raki123@gmail.com",
+        acNumber: "******** 4852",
+        createdAt: "2024-02-25T16:20:00",
+        amount: "9.00",
       },
-      {
-        id: "1234569",
-        email: "third@example.com",
-        paymentType: "Card",
-        createdAt: "2025-02-25T16:25:00",
-        amount: "100.00",
-      },
+      // More data entries here...
     ],
     pagination: { totalData: 40 },
   };
@@ -41,10 +35,10 @@ export default function EarningHistory() {
 
   const columns = [
     {
-      title: "Transition ID",
+      title: "SI NO.",
       dataIndex: "id",
       key: "id",
-      render: (text) => (text ? text.slice(0, 7) + "..." : "-"),
+      render: (text) => (text ? `#${text}` : "-"),
       align: "center",
     },
     {
@@ -54,9 +48,9 @@ export default function EarningHistory() {
       align: "center",
     },
     {
-      title: "Payment Type",
-      dataIndex: "paymentType",
-      key: "paymentType",
+      title: "Account Number",
+      dataIndex: "acNumber",
+      key: "acNumber",
       align: "center",
     },
     {
@@ -86,6 +80,15 @@ export default function EarningHistory() {
 
   return (
     <>
+      <div>
+        <h1 className="text-3xl text-white font-semibold my-4 py-4">
+          {" "}
+          <span className=" bg-primary p-4 rounded-lg">
+            Total Earning: $780000
+          </span>{" "}
+        </h1>
+      </div>
+
       <div className="bg-button rounded-lg py-4">
         <div className="flex justify-between items-center px-4">
           <h3 className="text-2xl text-white font-semibold">Earning History</h3>
