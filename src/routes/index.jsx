@@ -20,7 +20,11 @@ const LazyLoadFallback = ({ children }) => (
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: (
+      <Main />
+      // <AdminRoutes>
+      // </AdminRoutes>
+    ),
     children: routesGenerators(dashboardItems),
   },
   {
