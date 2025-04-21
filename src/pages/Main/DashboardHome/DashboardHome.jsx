@@ -5,6 +5,8 @@ import { LiaHandsHelpingSolid } from "react-icons/lia";
 import DashboardChart from "../../../Components/DashboardCahrt";
 import LoaderWraperComp from "../../../Components/LoaderWraperComp";
 import RecentUser from "../../../Components/RecentUser";
+import GeoVisualization from "./GeoVisualization";
+import TotalParticipate from "./TotalParticipate";
 // import { useGetStatisticsQuery } from "../../../redux/features/common/commonApi";
 
 export default function DashboardHome() {
@@ -75,10 +77,16 @@ export default function DashboardHome() {
             </div>
           </div>
         </LoaderWraperComp>
-        {/* chart heer */}
+        {/* GeoVisualization chart here */}
+        {/* GeoVisualization chart here */}
+        {/* GeoVisualization chart here */}
         <div className="text-center py-20">
-          <h2> Here show chart </h2>
+          <GeoVisualization />
         </div>
+        {/* GeoVisualization chart here */}
+        {/* GeoVisualization chart here */}
+        {/* GeoVisualization chart here */}
+
         <div className="flex flex-col lg:flex-row justify-center items-start gap-4 md:gap-6">
           <div className="w-full lg:w-1/2">
             <DashboardChart />
@@ -88,10 +96,15 @@ export default function DashboardHome() {
           </div>
         </div>
 
-        {/* chart here*/}
-        <div>
-          <h2 className="text-center py-20"> Here show chart </h2>
+        {/* TotalParticipate Here*/}
+        {/* TotalParticipate Here*/}
+        {/* TotalParticipate Here*/}
+        <div className="text-center py-20">
+          <TotalParticipate />
         </div>
+        {/* TotalParticipate Here*/}
+        {/* TotalParticipate Here*/}
+        {/* TotalParticipate Here*/}
       </div>
     </>
   );
