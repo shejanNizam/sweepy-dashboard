@@ -80,7 +80,10 @@ export default function DashboardHome() {
         {/* GeoVisualization chart here */}
         {/* GeoVisualization chart here */}
         {/* GeoVisualization chart here */}
-        <div className="text-center py-20">
+        <h1 className="text-start text-2xl font-semibold">
+          Uesrs Geo Visualization
+        </h1>
+        <div className="text-center py-10">
           <GeoVisualization />
         </div>
         {/* GeoVisualization chart here */}

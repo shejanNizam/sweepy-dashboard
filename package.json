@@ -12,6 +12,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
     "@tailwindcss/typography": "^0.5.15",
+    "ag-charts-enterprise": "^11.2.4",
+    "ag-charts-react": "^11.2.4",
     "antd": "^5.22.3",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
