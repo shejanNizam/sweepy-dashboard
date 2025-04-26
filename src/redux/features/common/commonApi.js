@@ -10,6 +10,20 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["common"],
     }),
+    getAllSummary: builder.query({
+      query: () => ({
+        url: `/admin/dashboard/summery`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
+    getAllMapSummary: builder.query({
+      query: () => ({
+        url: `/admin/dashboard/map-user`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
     // Earning in DashboardHome page
     getEarnings: builder.query({
       query: (year) => ({
@@ -110,4 +124,6 @@ export const {
   useGetAllCategoryQuery,
   useAddCategoryMutation,
   useEditCategoryMutation,
+  useGetAllSummaryQuery,
+  useGetAllMapSummaryQuery
 } = userApi;

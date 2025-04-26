@@ -15,6 +15,8 @@ const SignIn = () => {
   const [nizamLogin, { isLoading }] = useLoginMutation();
 
   const onFinish = async (values) => {
+    console.log(values);
+
     try {
       const response = await nizamLogin(values).unwrap();
       console.log(response);

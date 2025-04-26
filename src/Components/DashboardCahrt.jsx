@@ -37,6 +37,7 @@ const DashboardChart = () => {
         />
       </div>
       <LoaderWraperComp>
+
         <ResponsiveContainer width="100%" height={500}>
           <BarChart
             data={data?.data}
@@ -69,6 +70,7 @@ const DashboardChart = () => {
             />
           </BarChart>
         </ResponsiveContainer>
+        
       </LoaderWraperComp>
     </div>
   );
