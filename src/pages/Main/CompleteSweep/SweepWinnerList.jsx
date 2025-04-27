@@ -108,7 +108,7 @@ export default function SweepWinnerList() {
         title={"Winner List"}
         backPath={-1}
         // disbaledBackBtn={true}
-        className={"px-10 border-b border-primary bg-button text-button py-6"}
+        className={"px-10 border-b border-primary bg-button text-white py-6"}
       />
       {/* <h3 className="text-2xl font-semibold mb-4">Winner List</h3> */}
 
