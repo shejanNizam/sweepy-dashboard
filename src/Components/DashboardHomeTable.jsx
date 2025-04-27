@@ -51,6 +51,7 @@ const DashboardHomeTable = () => {
       ),
     },
   ];
+  
   const data = [];
   for (let index = 0; index < 20; index++) {
     data.push({

@@ -24,6 +24,27 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["common"],
     }),
+    getAllUserEarning: builder.query({
+      query: ({year}) => ({
+        url: `/admin/dashboard/earning-chart?yearly=${year}`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
+    getTotalUserSummary: builder.query({
+      query: ({year}) => ({
+        url: `/admin/dashboard/user-chart?yearly=${year}`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
+    getTotalPropertySummary: builder.query({
+      query: ({search,limit,page}) => ({
+        url: `/admin/dashboard/product-chart?searchQ=${search}&page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
     // Earning in DashboardHome page
     getEarnings: builder.query({
       query: (year) => ({
@@ -117,6 +138,7 @@ export const userApi = baseApi.injectEndpoints({
 export const {
   useGetStatisticsQuery,
   useGetEarningsQuery,
+  useGetTotalUserSummaryQuery,
   useGetAllClientQuery,
   useGetAllBeauticiansQuery,
   useGetBeauticianByIdQuery,
@@ -125,5 +147,7 @@ export const {
   useAddCategoryMutation,
   useEditCategoryMutation,
   useGetAllSummaryQuery,
-  useGetAllMapSummaryQuery
+  useGetAllMapSummaryQuery,
+  useGetAllUserEarningQuery,
+  useGetTotalPropertySummaryQuery
 } = userApi;

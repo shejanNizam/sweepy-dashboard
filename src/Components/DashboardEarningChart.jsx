@@ -13,7 +13,10 @@ import {
   YAxis,
   LineChart,
 } from "recharts";
-import { useGetEarningsQuery } from "../redux/features/common/commonApi";
+import {
+  useGetAllUserEarningQuery,
+  useGetEarningsQuery,
+} from "../redux/features/common/commonApi";
 import LoaderWraperComp from "./LoaderWraperComp";
 
 const data = [
@@ -64,14 +67,49 @@ const data = [
 const DashboardEarningChart = () => {
   const [year, setYear] = useState(dayjs().year());
 
-  //   const { data } = useGetEarningsQuery(year);
+  const {
+    data: userEarning,
+    isError,
+    isLoading,
+  } = useGetAllUserEarningQuery({ year });
   //   console.log(data?.data);
 
-  //   const handleYearChange = (date) => {
-  //     if (data) {
-  //       setYear(date.year());
-  //     }
-  //   };
+  const handleYearChange = (date) => {
+    if (data) {
+      setYear(date.year());
+    }
+  };
+
+  function replaceMonthsWithNames(data) {
+    // Define a mapping of month numbers to abbreviated month names
+    const monthMapping = {
+      1: "Jan",
+      2: "Feb",
+      3: "Mar",
+      4: "Apr",
+      5: "May",
+      6: "Jun",
+      7: "Jul",
+      8: "Aug",
+      9: "Sep",
+      10: "Oct",
+      11: "Nov",
+      12: "Dec",
+    };
+
+    // Iterate through the data and create a new object with the month replaced
+    return data?.map((entry) => {
+      return {
+        ...entry, // Spread the existing properties
+        month: monthMapping[entry?.month] || entry?.month, // Replace the month value
+      };
+    });
+  }
+
+  const updateData = replaceMonthsWithNames(userEarning?.data);
+
+  console.log("======>", updateData);
+  console.log(updateData);
 
   return (
     <div className="bg-white rounded-lg px-8 drop-shadow-sm">
@@ -80,15 +118,15 @@ const DashboardEarningChart = () => {
         <DatePicker
           picker="year"
           value={dayjs().year(year)}
-          //   onChange={handleYearChange}
+          onChange={handleYearChange}
         />
       </div>
-      <LoaderWraperComp>
+      <LoaderWraperComp isError={isError} isLoading={isLoading}>
         <ResponsiveContainer width="100%" height={500}>
           <LineChart
             width={500}
             height={300}
-            data={data}
+            data={updateData}
             margin={{
               top: 5,
               right: 30,
@@ -97,13 +135,13 @@ const DashboardEarningChart = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
             <Legend />
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="totalAmount"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />

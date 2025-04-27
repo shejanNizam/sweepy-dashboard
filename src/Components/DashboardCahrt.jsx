@@ -70,7 +70,6 @@ const DashboardChart = () => {
             />
           </BarChart>
         </ResponsiveContainer>
-        
       </LoaderWraperComp>
     </div>
   );
