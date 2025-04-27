@@ -54,7 +54,7 @@ export default function Notifications() {
   const navigate = useNavigate();
   return (
     <div className="bg-white h-auto">
-      <div className="sticky top-32 flex justify-start items-center gap-2 bg-hash rounded-t-md h-[80px] text-white text-[32px] font-bold pl-8">
+      <div className="sticky top-32 flex justify-start items-center gap-2 bg-button rounded-t-md h-[80px] text-white text-[32px] font-bold pl-8">
         <button onClick={() => navigate(-1)}>
           <IoIosArrowBack />
         </button>
@@ -72,7 +72,7 @@ export default function Notifications() {
               key={d.id}
               className="flex justify-start items-center gap-4 m-4"
             >
-              <IoNotificationsOutline className="bg-[#E8EAEF] w-[40px] h-[40px] rounded-sm text-primary p-2" />
+              <IoNotificationsOutline className="text-[#181F81]  hover:bg-white hover:text-[#181F81] w-[40px] h-[40px] rounded-full p-2 shadow-sm transition-all" />
               <div>
                 <p className="text-xl">{d.text}</p>
                 <p className="text-[#989898]">{d.timestamp}</p>

@@ -116,8 +116,8 @@ const Sidebar = () => {
                     to={path}
                     className={({ isActive }) =>
                       isActive
-                        ? "bg-button text-white w-full px-4 py-3 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
-                        : "hover:text-white text-[20px] hover:bg-button w-full px-4 py-2 flex items-center justify-start gap-3 text-lg transition-all rounded-lg"
+                        ? "bg-gradient-to-r from-[#FFFFFF] to-[#EBEBEB] text-gray-700 w-full px-4 py-2 flex items-center !border-2 !border-gray-400 justify-start gap-3 text-lg transition-all rounded-lg"
+                        : "hover:text-gray-700 text-lg !border-2 !border-hash hover:bg-gradient-to-r hover:from-[#FFFFFF] hover:to-[#EBEBEB] w-full px-4 py-2 flex items-center justify-start gap-3 transition-all rounded-lg"
                     }
                   >
                     <div>{createElement(icon, { size: "20" })}</div>
@@ -132,7 +132,7 @@ const Sidebar = () => {
         <div className="p-[24px]">
           <button
             onClick={handleLogOut}
-            className="bg-[#65676d] text-black w-full px-10 py-4 flex justify-center items-center gap-2 rounded-lg text-xl"
+            className="bg-[#65676d] text-white w-full px-10 py-4 flex justify-center items-center gap-2 rounded-lg text-xl"
           >
             <BiLogOut className="text-[#FF5252]" size={20} />
             <span>Logout</span>

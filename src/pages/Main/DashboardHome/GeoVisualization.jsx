@@ -14,9 +14,12 @@ import { useGetAllMapSummaryQuery } from "../../../redux/features/common/commonA
 export default function GeoVisualization() {
   const { data: mapData, isLoading, isError } = useGetAllMapSummaryQuery();
   const [options, setOptions] = useState({
-    title: {
-      text: "Total Users",
-    },
+    // title: {
+    //   text: "Total Users",
+    // },
+    width: "90%",
+    height: 600,
+    autoSize: false,
     data: [], // Initialize with empty data
     topology,
     series: [

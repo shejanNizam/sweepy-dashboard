@@ -65,8 +65,7 @@ const Suggestion = () => {
     <>
       {/* <PageHeading /> {"Support Message"} */}
       <div className="w-full">
-        <h1 className="text-3xl bg-primary p-4  text-white font-semibold my-4 py-4">
-          {" "}
+        <h1 className="text-3xl bg-button p-4  text-white font-semibold my-4 py-4">
           <span className=" ">Item Suggestion</span>{" "}
         </h1>
       </div>

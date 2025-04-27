@@ -4,12 +4,12 @@ import Sidebar from "./Sidebar";
 
 const Main = () => {
   return (
-    <div className="flex text-start bg-white min-h-screen">
+    <div className="flex text-start  min-h-screen">
       <div role="navigation">
         <Sidebar />
       </div>
       <main className="flex-1 pl-[326px]">
-        <div className="sticky top-0 w-full p-[24px] z-10 bg-white">
+        <div className="sticky top-0 w-full p-[24px] z-10 ">
           <Header />
         </div>
         <div className="p-[24px] pt-0.5">

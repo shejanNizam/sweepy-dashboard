@@ -21,11 +21,9 @@ const EditAbout = () => {
   return (
     <div className="min-h-[75vh] flex flex-col justify-between gap-6">
       <div className="space-y-6">
-        <PageHeading
-          title={"Edit About Us"}
-          backPath={-1}
-          className={"text-button"}
-        />
+        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+          <h2 className="text-2xl font-semibold">Edit About Us</h2>
+        </div>
 
         <div className="h-full">
           <ReactQuill

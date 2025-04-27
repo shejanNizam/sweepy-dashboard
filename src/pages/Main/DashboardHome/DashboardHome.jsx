@@ -25,9 +25,9 @@ export default function DashboardHome() {
     <>
       <div className="space-y-2 md:space-y-4 lg:space-y-6">
         <LoaderWraperComp
-          isLoading={isLoading} // Dynamically set loading state here
-          isError={isError} // Dynamically set error state here
-          dataEmpty={false} // Dynamically set empty data state here
+          isLoading={isLoading}
+          isError={isError}
+          dataEmpty={false}
           loader={
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <Skeleton active className="w-full h-full" />
@@ -36,58 +36,48 @@ export default function DashboardHome() {
           }
           className={"h-[12.02vh]"}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            <div className="flex justify-center items-center gap-4 bg-button h-36 rounded-lg drop-shadow-xl">
-              <FaUserTie
-                className={`text-white w-12 h-12`}
-                aria-label="Total Customers"
-              />
-              <div>
-                <p className="text-white font-semibold text-lg md:text-xl">
-                  Total Earnings
-                </p>
-                <p className="text-2xl md:text-3xl text-white font-semibold">
-                  {summaryData?.data?.totalEarnings || 0}
-                </p>
-              </div>
+          <div className="flex justify-between items-center bg-white shadow-sm rounded-md p-6">
+            {/* Total Users */}
+            <div className="flex justify-center gap-3 items-center flex-1">
+              <p className="text-gray-600 text-2xl font-bold">Total User:</p>
+              <p className="text-2xl font-bold text-gray-500 ">
+                {summaryData?.data?.totalUsers || 0}
+              </p>
             </div>
-            <div className="flex justify-center items-center gap-4 bg-button h-36 rounded-lg drop-shadow-xl">
-              <FaUsersViewfinder
-                className={`text-white w-12 h-12`}
-                aria-label="Total Beauticians"
-              />
+
+            {/* Divider */}
+            <div className="w-px bg-gray-300 h-12 mx-6"></div>
+            {/* Sweepstakes */}
+            <div className="flex justify-center gap-4 flex-1">
               <div>
-                <p className="text-white font-semibold text-lg md:text-xl">
-                  Total Users
-                </p>
-                <p className="text-2xl md:text-3xl text-white font-semibold">
-                  {summaryData?.data?.totalUsers || 0}
-                </p>
+                <p className="text-gray-600 text-2xl font-bold">Sweepstakes:</p>
+                <p className="text-xs text-gray-500">(Available)</p>
               </div>
+              <p className="text-2xl font-bold text-gray-500">
+                {summaryData?.data?.totalSweepstakes || 0}
+              </p>
             </div>
-            <div className="flex justify-center items-center gap-4 bg-button h-36 rounded-lg drop-shadow-xl">
-              <LiaHandsHelpingSolid
-                className={`text-white w-12 h-12`}
-                aria-label="Total Deals"
-              />
-              <div>
-                <p className="text-white font-semibold text-lg md:text-xl">
-                  Total Booked
-                </p>
-                <p className="text-2xl md:text-3xl text-white font-semibold">
-                  {summaryData?.data?.totalSweepstakes || 0}
-                </p>
-              </div>
+
+            {/* Divider */}
+            <div className="w-px bg-gray-300 h-12 mx-6"></div>
+
+            {/* Total Earnings */}
+            <div className="flex justify-center gap-2 items-center flex-1">
+              <p className="text-gray-600 text-2xl font-bold">Total Earning:</p>
+              <p className="text-2xl font-bold text-gray-500">
+                ${summaryData?.data?.totalEarnings || 0}
+              </p>
             </div>
           </div>
         </LoaderWraperComp>
+
         {/* GeoVisualization chart here */}
         {/* GeoVisualization chart here */}
         {/* GeoVisualization chart here */}
         <h1 className="text-start text-2xl font-semibold">
           Uesrs Geo Visualization
         </h1>
-        <div className="text-center py-10">
+        <div className="text-center shadow-sm">
           <GeoVisualization />
         </div>
         {/* GeoVisualization chart here */}
@@ -111,7 +101,7 @@ export default function DashboardHome() {
         {/* TotalParticipate Here*/}
         <div className="text-center py-20">
           {/* <TotalParticipate /> */}
-           <DashboardTotalPropertyChart/>
+          <DashboardTotalPropertyChart />
         </div>
         {/* TotalParticipate Here*/}
         {/* TotalParticipate Here*/}

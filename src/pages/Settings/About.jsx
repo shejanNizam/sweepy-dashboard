@@ -12,11 +12,9 @@ const About = () => {
   return (
     <div className="min-h-[70vh] flex flex-col justify-between">
       <div className="space-y-4">
-        <PageHeading
-          title={"About Us"}
-          disbaledBackBtn={true}
-          className={"text-button"}
-        />
+        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+          <h2 className="text-2xl font-semibold">About Us</h2>
+        </div>
 
         <div className="w-full bg-white rounded-2xl min-h-[60vh]">
           <div className="space-y-4 p-10">

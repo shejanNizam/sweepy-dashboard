@@ -1,10 +1,14 @@
 import React from "react";
-import { CiSettings, CiUser } from "react-icons/ci";
-import { FaServicestack } from "react-icons/fa6";
+import { CiCircleQuestion, CiSettings, CiUser } from "react-icons/ci";
+import { FaRegLightbulb, FaServicestack, FaUsers } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
-import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
+import {
+  MdOutlineSecurityUpdateWarning,
+  MdOutlineVerified,
+  MdSupportAgent,
+} from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
-import { RiDashboardHorizontalFill } from "react-icons/ri";
+import { RiAdvertisementLine, RiDashboardHorizontalFill } from "react-icons/ri";
 import Advertisement from "../pages/Main/Advertisement/Advertisement";
 import Assistant from "../pages/Main/Assistant/Assistant";
 import AvailableSweep from "../pages/Main/AvailableSweep/AvailableSweep";
@@ -25,6 +29,9 @@ import EditPrivacyPolicy from "../pages/Settings/EditPrivacyPolicy";
 import EditTermsConditions from "../pages/Settings/EditTermsConditions";
 import PrivacyPolicy from "../pages/Settings/PrivacyPolicy";
 import TermsConditions from "../pages/Settings/TermsConditions";
+import { IoIosCard } from "react-icons/io";
+import { BiCategoryAlt } from "react-icons/bi";
+import { TbPigMoney } from "react-icons/tb";
 // import Support from "../pages/Support/Support";
 
 export const dashboardItems = [
@@ -41,7 +48,7 @@ export const dashboardItems = [
   {
     name: "Complete Sweep",
     path: "complete-sweep",
-    icon: PiUsersThree,
+    icon: MdOutlineVerified,
     element: <CompleteSweep />,
   },
   {
@@ -51,7 +58,7 @@ export const dashboardItems = [
   {
     name: "Available Sweep",
     path: "available-sweep",
-    icon: PiUsersThree,
+    icon: IoIosCard,
     element: <AvailableSweep />,
   },
   {
@@ -61,37 +68,37 @@ export const dashboardItems = [
   {
     name: "Category",
     path: "category",
-    icon: PiUsersThree,
+    icon: BiCategoryAlt,
     element: <Category />,
   },
   {
     name: "Users",
     path: "client",
-    icon: PiUsersThree,
+    icon: FaUsers,
     element: <Client />,
   },
   {
     name: "Advertisement",
     path: "advertisement",
-    icon: PiUsersThree,
+    icon: RiAdvertisementLine,
     element: <Advertisement />,
   },
   {
     name: "Earnings",
     path: "earnings",
-    icon: GrMoney,
+    icon: TbPigMoney,
     element: <EarningHistory />,
   },
   {
     name: "Suggestion",
     path: "suggestion",
-    icon: GrMoney,
+    icon: FaRegLightbulb,
     element: <Suggestion />,
   },
   {
     name: "Assistant",
     path: "assistant",
-    icon: GrMoney,
+    icon: MdSupportAgent,
     element: <Assistant />,
   },
   // {
@@ -152,7 +159,7 @@ export const dashboardItems = [
       },
       {
         name: "About Us",
-        icon: FaServicestack,
+        icon: CiCircleQuestion,
         path: "settings/about-us",
         element: <About />,
       },

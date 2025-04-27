@@ -34,12 +34,9 @@ const EditMyProfile = () => {
 
   return (
     <div className="space-y-[24px] min-h-[83vh] bg-white rounded-2xl">
-      <PageHeading
-        title={"Edit Personal Information"}
-        backPath={-1}
-        // disbaledBackBtn={true}
-        className={"px-10 border-b border-primary text-button py-6"}
-      />
+      <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+        <h2 className="text-2xl font-semibold">Edit Personal information</h2>
+      </div>
 
       <div className="w-full">
         <Form

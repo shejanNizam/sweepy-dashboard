@@ -62,8 +62,10 @@ export default function Advertisement() {
 
   return (
     <div className="p-6">
-      <h3 className="text-2xl font-semibold mb-6">Advertisement</h3>
-      <p className="text-sm text-gray-500 mb-4">
+      <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+        <h2 className="text-2xl font-semibold">Advertisements</h2>
+      </div>
+      <p className="text-sm text-gray-500  px-4 py-6">
         [Note: You can upload a maximum of 5 banners.]
       </p>
 

@@ -12,11 +12,9 @@ const TermsConditions = () => {
   return (
     <div className="min-h-[70vh] flex flex-col justify-between">
       <div className="space-y-4">
-        <PageHeading
-          title={"Terms & Conditions"}
-          disbaledBackBtn={true}
-          className={"text-button"}
-        />
+        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+          <h2 className="text-2xl font-semibold">Terms & Conditions</h2>
+        </div>
 
         <div className="w-full bg-white rounded-2xl min-h-[60vh]">
           <div className="space-y-4 p-10">

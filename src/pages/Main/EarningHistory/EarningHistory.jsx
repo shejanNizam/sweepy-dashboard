@@ -26,7 +26,7 @@ export default function EarningHistory() {
       },
       // More data entries here...
     ],
-    pagination: { totalData: 40 },
+    pagination: { totalData: 10 },
   };
 
   const onChangeDate = (date, dateString) => {
@@ -81,9 +81,9 @@ export default function EarningHistory() {
   return (
     <>
       <div>
-        <h1 className="text-3xl text-white font-semibold my-4 py-4">
+        <h1 className="text-2xl text-white font-semibold my-4 py-4">
           {" "}
-          <span className=" bg-primary p-4 rounded-lg">
+          <span className=" bg-button p-4 rounded-lg">
             Total Earning: $780000
           </span>{" "}
         </h1>

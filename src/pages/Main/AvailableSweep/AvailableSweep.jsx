@@ -144,26 +144,26 @@ export default function AvailableSweep() {
 
   return (
     <div className="bg-white rounded-lg">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end py-4 px-5">
         <Button
           type="primary"
           icon={<i className="fas fa-plus"></i>}
-          className="bg-primary"
+          className="bg-dash"
         >
           Add Sweepstakes
         </Button>
       </div>
-      <div className="flex justify-between items-center bg-primary p-4 rounded-t-md text-white">
+      <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
         <h2 className="text-2xl font-semibold">Available Sweepstakes</h2>
         <div className="flex gap-4 items-center">
           <Input
-            placeholder="Search Product..."
+            placeholder="Search Name..."
             value={searchName}
             onChange={(e) => {
               setSearchName(e.target.value);
               setPagination((state) => ({ ...state, current: 1 }));
             }}
-            style={{ width: 250 }}
+            style={{ width: 150 }}
           />
         </div>
       </div>

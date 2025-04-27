@@ -154,6 +154,9 @@ const Category = () => {
           Add Category
         </Button>
       </div>
+      <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+        <h2 className="text-2xl font-semibold">Category</h2>
+      </div>
       <div>
         <Table
           columns={columns}

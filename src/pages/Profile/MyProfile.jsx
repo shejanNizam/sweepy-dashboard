@@ -24,12 +24,9 @@ const MyProfile = () => {
 
   return (
     <div className="space-y-[24px] min-h-[83vh] bg-white rounded-2xl">
-      <PageHeading
-        title={"Personal information"}
-        backPath={-1}
-        disbaledBackBtn={true}
-        className={"px-10 border-b border-[#CEF0FF] py-6 text-button"}
-      />
+<div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+          <h2 className="text-2xl font-semibold">Personal information</h2>
+        </div>
       <div className="w-full">
         <div className="py-4 px-8 flex justify-end items-center">
           <Button
