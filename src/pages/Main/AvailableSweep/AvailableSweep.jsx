@@ -1,7 +1,7 @@
 import { Avatar, Button, Form, Input, Table } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 export default function AvailableSweep() {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
@@ -145,13 +145,15 @@ export default function AvailableSweep() {
   return (
     <div className="bg-white rounded-lg">
       <div className="flex justify-end py-4 px-5">
-        <Button
-          type="primary"
-          icon={<i className="fas fa-plus"></i>}
-          className="bg-dash"
-        >
-          Add Sweepstakes
-        </Button>
+        <Link to={"/create-sweep"}>
+          <Button
+            type="primary"
+            icon={<i className="fas fa-plus"></i>}
+            className="bg-dash"
+          >
+            Add Sweepstakes
+          </Button>
+        </Link>
       </div>
       <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
         <h2 className="text-2xl font-semibold">Available Sweepstakes</h2>

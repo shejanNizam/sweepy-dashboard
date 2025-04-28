@@ -32,6 +32,7 @@ import TermsConditions from "../pages/Settings/TermsConditions";
 import { IoIosCard } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
 import { TbPigMoney } from "react-icons/tb";
+import CreateSweep from "../pages/Main/AvailableSweep/CreateSweep";
 // import Support from "../pages/Support/Support";
 
 export const dashboardItems = [
@@ -44,6 +45,10 @@ export const dashboardItems = [
   {
     path: "notifications",
     element: <Notifications />,
+  },
+  {
+    path: "/create-sweep",
+    element: <CreateSweep />,
   },
   {
     name: "Complete Sweep",
