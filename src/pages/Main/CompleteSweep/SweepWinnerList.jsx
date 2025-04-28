@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import PageHeading from "../../../Components/PageHeading";
 import { FaFacebook, FaInstagram } from "react-icons/fa6";
+import { useGetWinnerListQuery } from "../../../redux/features/common/commonApi";
 
 export default function SweepWinnerList() {
   const { id } = useParams(); // Extract the ID from the URL
@@ -12,6 +13,7 @@ export default function SweepWinnerList() {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
   const [selectedWinner, setSelectedWinner] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const {data:updateData,isLoading,isError} = useGetWinnerListQuery(id)
 
   const winnerData = [
     {
@@ -114,15 +116,15 @@ export default function SweepWinnerList() {
 
       <Table
         columns={columns}
-        dataSource={winnerData}
+        dataSource={updateData?.data}
         rowKey={(record) => record.id}
-        pagination={{
-          current: pagination.current,
-          pageSize: pagination.pageSize,
-          total: winnerData.length,
-          showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20", "50"],
-        }}
+        // pagination={{
+        //   current: pagination.current,
+        //   pageSize: pagination.pageSize,
+        //   total: winnerData.length,
+        //   showSizeChanger: true,
+        //   pageSizeOptions: ["5", "10", "20", "50"],
+        // }}
         onChange={handleTableChange}
         className="mt-4"
       />
