@@ -45,6 +45,19 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["common"],
     }),
+
+
+    getCategory: builder.query({
+      query: ({search}) => ({
+        url: `/admin/get-category?name=${search}`,
+        method: "GET",
+      }),
+      providesTags: ["common"],
+    }),
+
+
+
+
     // Earning in DashboardHome page
     getEarnings: builder.query({
       query: (year) => ({
@@ -149,5 +162,6 @@ export const {
   useGetAllSummaryQuery,
   useGetAllMapSummaryQuery,
   useGetAllUserEarningQuery,
-  useGetTotalPropertySummaryQuery
+  useGetTotalPropertySummaryQuery,
+  useGetCategoryQuery
 } = userApi;

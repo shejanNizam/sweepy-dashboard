@@ -7,9 +7,18 @@ import { FaEdit, FaTrash } from "react-icons/fa"; // Importing React Icons for E
 //   useGetAllCategoryQuery,
 // } from "../../../redux/features/common/commonApi"; // Commented out Redux/RTK query imports
 import { ErrorSwal, SuccessSwal } from "../../../utils/allSwalFire";
+import { useGetCategoryQuery } from "../../../redux/features/common/commonApi";
 
 const Category = () => {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const {
+    data: updateData,
+    isError,
+    isLoading,
+    error,
+  } = useGetCategoryQuery({ search });
+  console.log("===========>aiman", updateData?.data, error);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);

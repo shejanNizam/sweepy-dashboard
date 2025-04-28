@@ -32,6 +32,10 @@ export default function DashboardHome() {
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <Skeleton active className="w-full h-full" />
               <Skeleton active className="w-full h-full" />
+              
+              
+
+              
             </div>
           }
           className={"h-[12.02vh]"}

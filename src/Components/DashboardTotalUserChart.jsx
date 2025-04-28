@@ -20,10 +20,10 @@ import {
 } from "../redux/features/common/commonApi";
 import LoaderWraperComp from "./LoaderWraperComp";
 
-
 const DashboardTotalUSerChart = () => {
   const [year, setYear] = useState(dayjs().year());
-  
+
+  console.log("=========>", year);
 
   const {
     data: userData,
@@ -33,7 +33,7 @@ const DashboardTotalUSerChart = () => {
   console.log("ahad======>", userData?.data);
 
   const handleYearChange = (date) => {
-    if (data) {
+    if (userData) {
       setYear(date.year());
     }
   };
@@ -54,7 +54,7 @@ const DashboardTotalUSerChart = () => {
       11: "Nov",
       12: "Dec",
     };
-  
+
     // Iterate through the data and create a new object with the month replaced
     return data?.map((entry) => {
       return {
@@ -63,11 +63,10 @@ const DashboardTotalUSerChart = () => {
       };
     });
   }
-  
 
   const updateData = replaceMonthsWithNames(userData?.data);
 
-  console.log("======>",updateData);
+  console.log("======>", updateData);
 
   return (
     <div className="bg-white rounded-lg px-8 drop-shadow-sm">
