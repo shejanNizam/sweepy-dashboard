@@ -1,9 +1,12 @@
 import { Button, Image, message, Modal, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import xyz from "../../../assets/images/services/frame1.jpg"; // Importing React Icons for Edit and Delete
+import { useGetAllAdvertisementsQuery } from "../../../redux/features/common/commonApi";
 
 export default function Advertisement() {
+  const { data, isFetching } = useGetAllAdvertisementsQuery();
+
   const [advertisements, setAdvertisements] = useState([
     {
       id: 1,
@@ -70,14 +73,14 @@ export default function Advertisement() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {advertisements.map((ad) => (
+        {data?.data.map((ad) => (
           <div
             key={ad.id}
             className="relative border p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
           >
             <Image
               // src={ad.image}
-              src={xyz}
+              src={`${import.meta.env.VITE_IMAGE_URL}${ad.image}`}
               alt={`Advertisement ${ad.id}`}
               className="w-full h-40 object-cover rounded-md"
             />

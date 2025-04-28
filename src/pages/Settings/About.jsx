@@ -1,9 +1,16 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../../Components/PageHeading";
+import { useGetAboutUsQuery } from "../../redux/features/common/commonApi";
+import { useEffect } from "react";
 
 const About = () => {
   const navigate = useNavigate();
+  const { data: aboutUs, isFetching } = useGetAboutUsQuery();
+  if (isFetching) return <>Loading...</>;
+
+  // Directly use the description in JSX
+  const description = aboutUs?.data?.description;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -18,27 +25,11 @@ const About = () => {
 
         <div className="w-full bg-white rounded-2xl min-h-[60vh]">
           <div className="space-y-4 p-10">
-            <p className="text-[#464343]">
-              Lorem ipsum dolor sit amet consectetur. Fringilla a cras vitae
-              orci. Egestas duis id nisl sed ante congue scelerisque. Eleifend
-              facilisis aliquet tempus morbi leo sagittis. Pellentesque odio
-              amet turpis habitant. Imperdiet tincidunt nisl consectetur
-              hendrerit accumsan vehicula imperdiet mattis. Neque a vitae diam
-              pharetra duis habitasse convallis luctus pulvinar. Pharetra nunc
-              morbi elementum nisl magnis convallis arcu enim tortor. Cursus a
-              sed tortor enim mi imperdiet massa donec mauris. Sem morbi morbi
-              posuere faucibus.
-            </p>
-
-            <p className="text-[#464343]">
-              Lorem ipsum dolor sit amet consectetur. Fringilla a cras vitae
-              orci. Egestas duis id nisl sed ante congue scelerisque. Eleifend
-              facilisis aliquet tempus morbi leo sagittis. Pellentesque odio
-              amet turpis habitant. Imperdiet tincidunt nisl consectetur
-              hendrerit accumsan vehicula imperdiet mattis. Neque a vitae diam
-              pharetra duis habitasse convallis luctus pulvinar. Pharetra nunc
-              morbi elementum nisl magnis convallis arcu enim tortor.
-            </p>
+            {/* Use description directly in JSX */}
+            <p
+              className="text-[#464343]"
+              dangerouslySetInnerHTML={{ __html: description }}
+            ></p>
           </div>
         </div>
 

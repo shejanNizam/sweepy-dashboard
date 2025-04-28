@@ -127,12 +127,12 @@ export default function Client() {
         <div className="flex justify-between items-center px-4">
           <h3 className="text-2xl text-white font-semibold">All Users</h3>
           <div className="flex justify-around gap-4">
-            <DatePicker
+            {/* <DatePicker
               placeholder="Date"
               style={{ width: "150px" }}
               className="custom-datepicker rounded-full text-sm"
               onChange={onChangeDate}
-            />
+            /> */}
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}

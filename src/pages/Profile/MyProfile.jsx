@@ -6,27 +6,29 @@ import dashProfile from "../../assets/images/Ellipse15.png";
 import PageHeading from "../../Components/PageHeading";
 import PhoneCountryInput from "../../Components/PhoneCountryInput";
 import PasswordChangeModalForm from "../../Components/User/PasswordChangeModalForm";
+import { useGetMyProfileQuery } from "../../redux/features/common/commonApi";
 
 const MyProfile = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const profileData = {
-    name: "Enrique",
-    email: "enrique@gmail.com",
-    phone: "+880 1550597212",
-    profile: dashProfile,
-  };
-
+  // const profileData = {
+  //   name: "Enrique",
+  //   email: "enrique@gmail.com",
+  //   phone: "+880 1550597212",
+  //   profile: dashProfile,
+  // };
+  const { data: profileData, isFetching } = useGetMyProfileQuery();
+  if (isFetching) return <>Loading...</>;
   const handleEditProfile = () => {
     navigate("edit", { state: { profileData } });
   };
 
   return (
     <div className="space-y-[24px] min-h-[83vh] bg-white rounded-2xl">
-<div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
-          <h2 className="text-2xl font-semibold">Personal information</h2>
-        </div>
+      <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
+        <h2 className="text-2xl font-semibold">Personal information</h2>
+      </div>
       <div className="w-full">
         <div className="py-4 px-8 flex justify-end items-center">
           <Button
@@ -44,21 +46,29 @@ const MyProfile = () => {
           className="w-full grid grid-cols-12 gap-x-10 px-14 py-8"
           autoComplete="off"
           initialValues={{
-            name: profileData.name,
-            email: profileData.email,
+            name: profileData?.data?.name,
+            email: profileData?.data?.email,
           }}
         >
           <div className="col-span-3 space-y-6">
             <div className="min-h-[365px] flex flex-col items-center justify-center p-8 rounded-lg border border-primary shadow-inner space-y-4">
               <div className="my-3">
                 <img
-                  src={profileData.profile}
+                  src={
+                    profileData?.data?.image
+                      ? profileData?.data?.image
+                      : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+                  }
                   alt="Profile"
                   className="h-[144px] w-[144px] rounded-full"
                 />
               </div>
-              <h5 className="text-lg text-[#222222]">{profileData.name}</h5>
-              <h4 className="text-2xl text-[#222222]">{"Admin"}</h4>
+              <h5 className="text-lg text-[#222222]">
+                {profileData?.data?.name}
+              </h5>
+              <h4 className="text-2xl text-[#222222]">
+                {profileData?.data?.role}
+              </h4>
             </div>
             <Button
               onClick={handleEditProfile}

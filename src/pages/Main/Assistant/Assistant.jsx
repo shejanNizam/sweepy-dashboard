@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa"; // Importing icons for social media
 import { IoSearch } from "react-icons/io5";
+import { useGetAllAssistantQuery } from "../../../redux/features/common/commonApi";
 
 export default function Assistant() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +23,8 @@ export default function Assistant() {
   const [date, setDate] = useState("");
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { data, isFetching } = useGetAllAssistantQuery();
+  if (isFetching) return <>Loading..</>;
   const handleAddCategory = async () => {
     try {
       // setIsModalVisible(true);
@@ -41,23 +44,23 @@ export default function Assistant() {
     }
   };
   // Dummy data for users
-  const data = {
-    data: [
-      {
-        id: "1234567",
-        name: "Robert Marc",
-        email: "RobertMarc@gmail.com",
-        createdAt: "2025-01-01",
-      },
-      {
-        id: "1234568",
-        name: "John Doe",
-        email: "JohnDoe@gmail.com",
-        createdAt: "2025-02-01",
-      },
-    ],
-    pagination: { totalData: 10 },
-  };
+  // const data = {
+  //   data: [
+  //     {
+  //       id: "1234567",
+  //       name: "Robert Marc",
+  //       email: "RobertMarc@gmail.com",
+  //       createdAt: "2025-01-01",
+  //     },
+  //     {
+  //       id: "1234568",
+  //       name: "John Doe",
+  //       email: "JohnDoe@gmail.com",
+  //       createdAt: "2025-02-01",
+  //     },
+  //   ],
+  //   pagination: { totalData: 10 },
+  // };
 
   const columns = [
     {
@@ -78,8 +81,8 @@ export default function Assistant() {
     },
     {
       title: "Joining Date",
-      key: "createdAt",
-      dataIndex: "createdAt",
+      key: "joining_date",
+      dataIndex: "joining_date",
       render: (text) => (text ? dayjs(text).format("YYYY-MM-DD") : "-"),
     },
     {

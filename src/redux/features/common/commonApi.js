@@ -25,38 +25,34 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["common"],
     }),
     getAllUserEarning: builder.query({
-      query: ({year}) => ({
+      query: ({ year }) => ({
         url: `/admin/dashboard/earning-chart?yearly=${year}`,
         method: "GET",
       }),
       providesTags: ["common"],
     }),
     getTotalUserSummary: builder.query({
-      query: ({year}) => ({
+      query: ({ year }) => ({
         url: `/admin/dashboard/user-chart?yearly=${year}`,
         method: "GET",
       }),
       providesTags: ["common"],
     }),
     getTotalPropertySummary: builder.query({
-      query: ({search,limit,page}) => ({
+      query: ({ search, limit, page }) => ({
         url: `/admin/dashboard/product-chart?searchQ=${search}&page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["common"],
     }),
 
-
     getCategory: builder.query({
-      query: ({search}) => ({
+      query: ({ search }) => ({
         url: `/admin/get-category?name=${search}`,
         method: "GET",
       }),
       providesTags: ["common"],
     }),
-
-
-
 
     // Earning in DashboardHome page
     getEarnings: builder.query({
@@ -125,7 +121,90 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
+    // get all Advertisements
+    getAllAdvertisements: builder.query({
+      query: () => ({
+        url: "/admin/get-advertisements",
+        method: "GET",
+      }),
+      providesTags: ["advertisements"],
+    }),
+    // get all earnings
+    getAllEarnings: builder.query({
+      query: () => ({
+        url: "/admin/earning-history",
+        method: "GET",
+      }),
+      providesTags: ["earnings"],
+    }),
 
+    // get all suggestion
+    getAllSuggestion: builder.query({
+      query: () => ({
+        url: "/support",
+        method: "GET",
+      }),
+      providesTags: ["suggestion"],
+    }),
+
+    // get all assistant
+    getAllAssistant: builder.query({
+      query: () => ({
+        url: "/admin/get-assistants",
+        method: "GET",
+      }),
+      providesTags: ["assistant"],
+    }),
+
+    // get about us
+    getAboutUs: builder.query({
+      query: () => ({
+        url: "/about",
+        method: "GET",
+      }),
+      providesTags: ["about"],
+    }),
+
+    // get terms
+    getTerms: builder.query({
+      query: () => ({
+        url: "/terms",
+        method: "GET",
+      }),
+      providesTags: ["terms"],
+    }),
+    // get privacy
+    getPrivacy: builder.query({
+      query: () => ({
+        url: "/privacy",
+        method: "GET",
+      }),
+      providesTags: ["privacy"],
+    }),
+    // get notifications
+    getAllNotification: builder.query({
+      query: () => ({
+        url: "/notification",
+        method: "GET",
+      }),
+      providesTags: ["notification"],
+    }),
+    // get notifications badge
+    getBadgeNotification: builder.query({
+      query: () => ({
+        url: "/notification/badge-count",
+        method: "GET",
+      }),
+      providesTags: ["notification"],
+    }),
+    // get my profile
+    getMyProfile: builder.query({
+      query: () => ({
+        url: "/auth/my-profile",
+        method: "GET",
+      }),
+      providesTags: ["profile"],
+    }),
     //  add category
     addCategory: builder.mutation({
       query: (addCategoryData) => ({
@@ -163,5 +242,15 @@ export const {
   useGetAllMapSummaryQuery,
   useGetAllUserEarningQuery,
   useGetTotalPropertySummaryQuery,
-  useGetCategoryQuery
+  useGetCategoryQuery,
+  useGetAllAdvertisementsQuery,
+  useGetAllEarningsQuery,
+  useGetAllSuggestionQuery,
+  useGetAllAssistantQuery,
+  useGetAboutUsQuery,
+  useGetTermsQuery,
+  useGetPrivacyQuery,
+  useGetAllNotificationQuery,
+  useGetBadgeNotificationQuery,
+  useGetMyProfileQuery,
 } = userApi;

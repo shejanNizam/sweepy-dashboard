@@ -2,6 +2,7 @@ import { Button, DatePicker, Input, Pagination, Table } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
+import { useGetAllEarningsQuery } from "../../../redux/features/common/commonApi";
 
 export default function EarningHistory() {
   const [page, setPage] = useState(1);
@@ -32,26 +33,40 @@ export default function EarningHistory() {
   const onChangeDate = (date, dateString) => {
     setDate(dateString);
   };
-
+  const { data: updatedData, isFetching } = useGetAllEarningsQuery();
+  if (isFetching) return <>Loading..</>;
+  console.log(updatedData?.data?.result);
   const columns = [
     {
       title: "SI NO.",
-      dataIndex: "id",
+      dataIndex: "_id",
       key: "id",
-      render: (text) => (text ? `#${text}` : "-"),
-      align: "center",
+      render: (text) => (text ? `${text}` : "-"),
+      // align: "center",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       align: "center",
+      render: (data) => {
+        return data?.email ? data?.email : "N/A";
+      },
+    },
+    {
+      title: "TX.ID",
+      dataIndex: "transaction",
+      key: "transaction",
+      align: "center",
     },
     {
       title: "Account Number",
-      dataIndex: "acNumber",
-      key: "acNumber",
+      dataIndex: "user",
+      key: "user",
       align: "center",
+      render: (data) => {
+        return data?._id ? data?._id : "N/A";
+      },
     },
     {
       title: "Time & Date",
@@ -69,12 +84,15 @@ export default function EarningHistory() {
     },
   ];
 
-  const paginatedData = data.data.slice((page - 1) * 10, page * 10);
+  const paginatedData = updatedData?.data?.result?.slice(
+    (page - 1) * 10,
+    page * 10
+  );
 
   const filteredData = paginatedData.filter((item) => {
     return (
-      item.email.toLowerCase().includes(name.toLowerCase()) &&
-      item.createdAt.toLowerCase().includes(date.toLowerCase())
+      item.transaction?.toLowerCase().includes(name?.toLowerCase()) &&
+      item.createdAt?.toLowerCase().includes(date?.toLowerCase())
     );
   });
 
@@ -82,10 +100,9 @@ export default function EarningHistory() {
     <>
       <div>
         <h1 className="text-2xl text-white font-semibold my-4 py-4">
-          {" "}
           <span className=" bg-button p-4 rounded-lg">
-            Total Earning: $780000
-          </span>{" "}
+            Total Earning: ${updatedData?.data?.totalEarning}
+          </span>
         </h1>
       </div>
 
@@ -93,12 +110,12 @@ export default function EarningHistory() {
         <div className="flex justify-between items-center px-4">
           <h3 className="text-2xl text-white font-semibold">Earning History</h3>
           <div className="flex justify-around gap-4">
-            <DatePicker
+            {/* <DatePicker
               placeholder="Date"
               style={{ width: "150px" }}
               className="custom-datepicker rounded-full text-sm"
               onChange={onChangeDate}
-            />
+            /> */}
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}

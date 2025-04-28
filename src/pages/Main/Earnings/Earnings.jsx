@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import DashboardChart from "../../../Components/DashboardCahrt";
 import LoaderWraperComp from "../../../Components/LoaderWraperComp";
-import { useGetStatisticsQuery } from "../../../redux/features/common/commonApi";
+import {
+  useGetAllEarningsQuery,
+  useGetStatisticsQuery,
+} from "../../../redux/features/common/commonApi";
 
 const Earnings = () => {
   const [earningsData, setEarningsData] = useState(null);

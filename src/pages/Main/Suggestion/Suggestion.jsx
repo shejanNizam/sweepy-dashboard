@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 // import PageHeading from "../../Components/PageHeading";
+import { useGetAllSuggestionQuery } from "../../../redux/features/common/commonApi.js";
 
 const messages = [
   {
@@ -59,6 +60,8 @@ const messages = [
 ];
 
 const Suggestion = () => {
+  const { data } = useGetAllSuggestionQuery();
+  console.log(data.data);
   const [selectedMessage, setSelectedMessage] = useState(messages[0]);
 
   return (
@@ -75,9 +78,9 @@ const Suggestion = () => {
       bg-gray-50 text-white p-8"
       >
         {/* Left Side - User List */}
-        <div className="w-1/3 pr-8">
+        <div className="w-1/3 pr-8 h-[640px] overflow-y-auto">
           <ul className="space-y-4">
-            {messages.map((msg, index) => (
+            {data?.data?.map((msg, index) => (
               <li
                 key={index}
                 onClick={() => setSelectedMessage(msg)}
@@ -98,7 +101,7 @@ const Suggestion = () => {
           <p className="text-gray-400 mb-4">{selectedMessage.email}</p>
           <hr className="mb-5 border-red-200"></hr>
           <div className="bg-gray-300 p-4 rounded-lg">
-            <p className="text-gray-800">{selectedMessage.message}</p>
+            <p className="text-gray-800">{selectedMessage.msg}</p>
           </div>
         </div>
       </div>
