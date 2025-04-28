@@ -51,7 +51,24 @@ export const userApi = baseApi.injectEndpoints({
         url: `/admin/get-category?name=${search}`,
         method: "GET",
       }),
-      providesTags: ["common"],
+      providesTags: ["category"],
+    }),
+
+    deleteCategory: builder.mutation({
+      query: (categoryId) => ({
+        url: `/admin/delete-category/${categoryId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["category"],
+    }),
+
+    editCategory: builder.mutation({
+      query: ({ categoryId, name }) => ({
+        url: `/admin/edit-category/${categoryId}`,
+        method: "PATCH",
+        body: { name },
+      }),
+      invalidatesTags: ["category"],
     }),
 
     // Earning in DashboardHome page
@@ -216,14 +233,14 @@ export const userApi = baseApi.injectEndpoints({
     }),
 
     //  edit category
-    editCategory: builder.mutation({
-      query: ({ categoryId, editCategoryData }) => ({
-        url: `/categories/${categoryId}`,
-        method: "PUT",
-        body: editCategoryData,
-      }),
-      invalidatesTags: ["category"],
-    }),
+    // editCategory: builder.mutation({
+    //   query: ({ categoryId, editCategoryData }) => ({
+    //     url: `/categories/${categoryId}`,
+    //     method: "PUT",
+    //     body: editCategoryData,
+    //   }),
+    //   invalidatesTags: ["category"],
+    // }),
   }),
 });
 
@@ -237,20 +254,22 @@ export const {
   useApprovedBeauticianMutation,
   useGetAllCategoryQuery,
   useAddCategoryMutation,
-  useEditCategoryMutation,
   useGetAllSummaryQuery,
   useGetAllMapSummaryQuery,
   useGetAllUserEarningQuery,
   useGetTotalPropertySummaryQuery,
   useGetCategoryQuery,
+  useEditCategoryMutation,
   useGetAllAdvertisementsQuery,
-  useGetAllEarningsQuery,
-  useGetAllSuggestionQuery,
   useGetAllAssistantQuery,
-  useGetAboutUsQuery,
-  useGetTermsQuery,
-  useGetPrivacyQuery,
+  useDeleteCategoryMutation,
+  useGetAllEarningsQuery,
   useGetAllNotificationQuery,
-  useGetBadgeNotificationQuery,
+  useGetAllSuggestionQuery,
   useGetMyProfileQuery,
+  useGetAboutUsQuery,
+  useGetPrivacyQuery,
+  useGetTermsQuery,
+  useGetBadgeNotificationQuery
+
 } = userApi;
