@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa"; // Importing icons for social media
 import { IoSearch } from "react-icons/io5";
+import { useGetUsersQuery } from "../../../redux/features/user/userApi";
 
 export default function Client() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,30 +23,32 @@ export default function Client() {
   const [date, setDate] = useState("");
   const [form] = Form.useForm();
 
+  const { data, isFetching } = useGetUsersQuery({ searchQ: null });
+  // console.log(updatedData.data);
   // Dummy data for users
-  const data = {
-    data: [
-      {
-        id: "1234567",
-        name: "Robert Marc",
-        email: "RobertMarc@gmail.com",
-        createdAt: "2025-01-01",
-        phone: "+8801634425758",
+  // const data = {
+  //   data: [
+  //     {
+  //       id: "1234567",
+  //       name: "Robert Marc",
+  //       email: "RobertMarc@gmail.com",
+  //       createdAt: "2025-01-01",
+  //       phone: "+8801634425758",
 
-        profileImage: "https://via.placeholder.com/150",
-      },
-      {
-        id: "1234568",
-        name: "John Doe",
-        email: "JohnDoe@gmail.com",
-        createdAt: "2025-02-01",
-        phone: "+8801634425759",
-        profileImage: "https://via.placeholder.com/150",
-      },
-    ],
-    pagination: { totalData: 40 },
-  };
-
+  //       profileImage: "https://via.placeholder.com/150",
+  //     },
+  //     {
+  //       id: "1234568",
+  //       name: "John Doe",
+  //       email: "JohnDoe@gmail.com",
+  //       createdAt: "2025-02-01",
+  //       phone: "+8801634425759",
+  //       profileImage: "https://via.placeholder.com/150",
+  //     },
+  //   ],
+  //   pagination: { totalData: 40 },
+  // };
+  if (isFetching) return <>Loading...</>;
   const columns = [
     {
       title: "#Tr.ID",
@@ -65,8 +68,8 @@ export default function Client() {
     },
     {
       title: "Join Date",
-      key: "createdAt",
-      dataIndex: "createdAt",
+      key: "joining_date",
+      dataIndex: "joining_date",
       render: (text) => (text ? dayjs(text).format("YYYY-MM-DD") : "-"),
     },
     {
@@ -181,26 +184,37 @@ export default function Client() {
         width={500}
       >
         <div className="flex justify-center">
-          <Avatar src={modalData?.profileImage} size={80} />
+          <Avatar
+            src={
+              modalData?.image
+                ? modalData?.image
+                : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+            }
+            size={80}
+          />
         </div>
 
         <div className="space-y-4">
           <p>
-            <strong>SI No.:</strong> #{modalData.id}
+            <strong>SI No.:</strong> #{modalData?.id}
           </p>
           <p>
-            <strong>Full Name:</strong> {modalData.name}
+            <strong>Full Name:</strong> {modalData?.name}
           </p>
           <p>
-            <strong>Email:</strong> {modalData.email}
+            <strong>Email:</strong> {modalData?.email}
           </p>
           <p>
-            <strong>Phone:</strong> {modalData.phone}
+            <strong>Phone:</strong> {modalData?.phone}
           </p>
 
           <div className="flex justify-center gap-4 mt-4">
-            <Button shape="circle" icon={<FaFacebook />} />
-            <Button shape="circle" icon={<FaInstagram />} />
+            <a href={`https://www.${modalData?.facebookLink}`} target="_blank">
+              <Button shape="circle" icon={<FaFacebook />} />
+            </a>
+            <a href={`https://www.${modalData?.instagramLink}`} target="_blank">
+              <Button shape="circle" icon={<FaInstagram />} />
+            </a>
           </div>
         </div>
       </Modal>

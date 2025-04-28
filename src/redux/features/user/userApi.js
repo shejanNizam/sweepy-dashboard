@@ -12,7 +12,13 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["auth"],
     }),
-
+    getUsers: builder.query({
+      query: (searchQ = null) => ({
+        url: `/admin/get-users?searchQ=${searchQ}`,
+        method: "GET",
+      }),
+      providesTags: ["auth"],
+    }),
     // Update user data
     updateUserData: builder.mutation({
       query: (data) => ({
@@ -25,4 +31,8 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUserDataQuery, useUpdateUserDataMutation } = userApi;
+export const {
+  useGetUserDataQuery,
+  useUpdateUserDataMutation,
+  useGetUsersQuery,
+} = userApi;
