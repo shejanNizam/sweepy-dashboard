@@ -9,6 +9,7 @@ import { FaEdit, FaTrash } from "react-icons/fa"; // Importing React Icons for E
 import { ErrorSwal, SuccessSwal } from "../../../utils/allSwalFire";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
+  useAddCategoryMutation,
   useDeleteCategoryMutation,
   useEditCategoryMutation,
   useGetCategoryQuery,
@@ -29,6 +30,7 @@ const Category = () => {
     useDeleteCategoryMutation();
 
   const [editCategory, { isLoading: isEditing }] = useEditCategoryMutation();
+  const [addCategory,{isLoading:isAdded}] = useAddCategoryMutation()
 
   console.log("===========>aiman", updateData?.data, error);
 
@@ -40,19 +42,32 @@ const Category = () => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   // Simulate addCategory and editCategory mutations with dummy success response
-  const handleAddCategory = async () => {
+  const handleAddCategory = async ({name}) => {
     try {
       // Simulate an API response
-      const response = { message: "Category added successfully" };
-      SuccessSwal({
-        title: "",
-        text: response.message || "Category added successfully",
-      });
-      setIsModalVisible(false);
+      console.log("aiman", categoryId,name);
+
+      const response = await addCategory({name});
+
+      console.log("====", categoryId, response);
+
+      if (response?.data?.success) {
+        // Display success message with the response message
+        SuccessSwal({
+          title: "Category Add Successfully",
+          // text: response?.message?.message || "Category deleted successfully",
+        });
+
+        // Hide the delete modal on success
+        setIsModalVisible(false);
+      } else {
+        // Handle unexpected responses
+        throw new Error(response?.error?.data?.errorType);
+      }
     } catch (error) {
       ErrorSwal({
         title: "",
-        text: error?.message || "Failed to add category",
+        text: error?.message || "Failed to update category",
       });
     }
   };
@@ -126,6 +141,8 @@ const Category = () => {
       });
     }
   };
+
+  
 
   const handleOpenModalForAdd = () => {
     setIsEditMode(false);
@@ -257,7 +274,7 @@ const Category = () => {
             onClick={
               isEditMode
                 ? () => handleEditCategory({categoryId,name})
-                : handleAddCategory
+                : ()=>handleAddCategory({categoryId,name})
             }
             className="w-full mt-4"
           >

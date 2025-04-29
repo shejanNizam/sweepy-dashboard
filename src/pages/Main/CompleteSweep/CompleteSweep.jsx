@@ -1,68 +1,47 @@
-import { Avatar, Button, Form, Input, Table } from "antd";
+import { Avatar, Button, Form, Input, Pagination, Table } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useGetSweepyQuery } from "../../../redux/features/common/commonApi";
+import { PolarGrid } from "recharts";
 
 export default function CompleteSweep() {
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
-  const [searchName, setSearchName] = useState("");
+  // const [pagination, setPagination] = useState({});
+  const BASE_URL = import.meta.env.VITE_IMAGE_URL;
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const {
+    data: updateData,
+    isError,
+    isLoading,
+    error,
+  } = useGetSweepyQuery({
+    search,
+    page
+  });
 
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [form] = Form.useForm();
 
-  // Sample data structure for the products
-  const data = [
-    {
-      id: "1",
-      productName: "Headphone",
-      category: "Electrical",
-      boostPrice: "$4",
-      deadline: "03-16-25",
-      winner: "See Winner",
-    },
-    {
-      id: "2",
-      productName: "Sun glass Guchi",
-      category: "Grocery",
-      boostPrice: "$5",
-      deadline: "03-16-25",
-      winner: "See Winner",
-    },
-    // Add more rows as needed
-  ];
-
-  const handleTableChange = (pag) => {
-    setPagination({
-      ...pagination,
-      current: pag.current,
-      pageSize: pag.pageSize,
-    });
-  };
-
+  // Handle the "Show Winner List" navigation
   const handleShowWinnerList = (id) => {
-    // Use navigate to go to the winner details page and pass the id as part of the URL
     navigate(`/complete-sweep/${id}`);
   };
 
   const columns = [
     {
-      title: "SL No",
-      key: "serial",
-      render: (_, __, index) =>
-        (pagination.current - 1) * pagination.pageSize + index + 1,
-      align: "center",
-    },
-    {
       title: "Image",
       key: "image",
-      render: (record) => <Avatar src={record.profileImage} size={40} />,
+      render: (record) => (
+        <Avatar src={`${BASE_URL}${record?.image}`} size={40} />
+      ),
       align: "center",
     },
     {
       title: "Product Name",
-      dataIndex: "productName",
-      key: "productName",
+      dataIndex: "name",
+      key: "name",
       align: "center",
     },
     {
@@ -73,8 +52,14 @@ export default function CompleteSweep() {
     },
     {
       title: "Boost Price",
-      dataIndex: "boostPrice",
-      key: "boostPrice",
+      dataIndex: "boots_price",
+      key: "boots_price",
+      align: "center",
+    },
+    {
+      title: "Participants",
+      dataIndex: "participants",
+      key: "participants",
       align: "center",
     },
     {
@@ -87,18 +72,37 @@ export default function CompleteSweep() {
     {
       title: "Winner",
       key: "winner",
-      render: (record) => (
-        <Button
+      render: (record) => {
+        console.log(record);
+       return record?.winners_reveal ? (
+       <Button
           type="primary"
           shape="round"
-          onClick={() => handleShowWinnerList(record.id)} // Pass id to navigate
+          onClick={() => handleShowWinnerList(record._id)} // Use _id to navigate
         >
-          {record.winner}
-        </Button>
-      ),
+          {/* {record.winners_reveal ? "See Winner" : "No Winner"} */}
+          See Winner
+        </Button>) : (<Button
+          type="primary"
+          shape="round"
+          // onClick={() => handleShowWinnerList(record._id)} // Use _id to navigate
+        >
+          {/* {record.winners_reveal ? "See Winner" : "No Winner"} */}
+          Revel Now
+        </Button>)
+      },
       align: "center",
     },
   ];
+
+  // const handleTableChange = (pagination) => {
+  //   // Update the pagination state and trigger a refetch
+  //   console.log(pagination);
+
+  //   setPagination(pagination);
+  // };
+  console.log(updateData?.pagination);
+  
 
   return (
     <div className="bg-darkGreen rounded-lg">
@@ -107,10 +111,10 @@ export default function CompleteSweep() {
         <div className="flex gap-4 items-center">
           <Input
             placeholder="Search Name..."
-            value={searchName}
+            value={search}
             onChange={(e) => {
-              setSearchName(e.target.value);
-              setPagination((state) => ({ ...state, current: 1 }));
+              setSearch(e.target.value);
+           // Reset to first page on search change
             }}
             style={{ width: 150 }}
           />
@@ -119,17 +123,23 @@ export default function CompleteSweep() {
 
       <Table
         columns={columns}
-        dataSource={data}
-        rowKey={(record) => record.id}
-        pagination={{
-          current: pagination.current,
-          pageSize: pagination.pageSize,
-          total: data.length,
-          showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20", "30", "40", "50"],
-        }}
-        onChange={handleTableChange}
+        dataSource={updateData?.data} // Updated data from the API
+        rowKey={(record) => record._id} // Use _id as the unique key
         className="mt-4"
+        pagination={false}
+      />
+      <Pagination
+        defaultCurrent={1}
+        // showQuickJumper={true}
+        // showSizeChanger={false}
+        total={updateData?.pagination?.totalItem}
+        current={page}
+        
+        pageSize={updateData?.pagination?.totalPage}
+        onChange={(currentPage) => setPage(currentPage)}
+        
+        className="text-white"
+        align="center"
       />
     </div>
   );

@@ -46,6 +46,8 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["common"],
     }),
 
+    //category sweepy
+
     getCategory: builder.query({
       query: ({ search }) => ({
         url: `/admin/get-category?name=${search}`,
@@ -70,11 +72,37 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["category"],
     }),
+    addCategory: builder.mutation({
+      query: ({ name }) => ({
+        url: `/admin/add-category`,
+        method: "POST",
+        body: { name },
+      }),
+      invalidatesTags: ["category"],
+    }),
+
+    // complete sweepy
+    getSweepy: builder.query({
+      query: ({ search, page, limit }) => ({
+        url: `/admin/get-sweepstake?page=${page}&limit=${limit}&name=${search}&status=completed`,
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
 
     // Earning in DashboardHome page
     getEarnings: builder.query({
       query: (year) => ({
         url: `/payments/chart?year=${year}`,
+        method: "GET",
+        // headers: { Authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["common"],
+    }),
+
+    getWinnerList: builder.query({
+      query: (id) => ({
+        url: `/admin/get-sweepstake-winners/${id}`,
         method: "GET",
         // headers: { Authorization: `Bearer ${token}` },
       }),
@@ -222,15 +250,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["profile"],
     }),
-    //  add category
-    addCategory: builder.mutation({
-      query: (addCategoryData) => ({
-        url: "/categories",
-        method: "POST",
-        body: addCategoryData,
-      }),
-      invalidatesTags: ["category"],
-    }),
 
     //  edit category
     // editCategory: builder.mutation({
@@ -253,7 +272,6 @@ export const {
   useGetBeauticianByIdQuery,
   useApprovedBeauticianMutation,
   useGetAllCategoryQuery,
-  useAddCategoryMutation,
   useGetAllSummaryQuery,
   useGetAllMapSummaryQuery,
   useGetAllUserEarningQuery,
@@ -270,6 +288,8 @@ export const {
   useGetAboutUsQuery,
   useGetPrivacyQuery,
   useGetTermsQuery,
-  useGetBadgeNotificationQuery
-
+  useGetBadgeNotificationQuery,
+  useAddCategoryMutation,
+  useGetSweepyQuery,
+  useGetWinnerListQuery
 } = userApi;
