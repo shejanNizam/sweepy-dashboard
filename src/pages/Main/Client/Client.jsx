@@ -111,8 +111,8 @@ export default function Client() {
   if (error) {
     return <div>Error loading client data.</div>;
   }
-
-  const paginatedData = data.data.slice((page - 1) * 10, page * 10);
+  console.log(data.pagination);
+  const paginatedData = data?.data?.slice((page - 1) * 10, page * 10);
 
   const filteredData = paginatedData.filter((item) => {
     return (
@@ -162,7 +162,7 @@ export default function Client() {
           defaultCurrent={1}
           showQuickJumper={true}
           showSizeChanger={false}
-          total={data.pagination.totalData}
+          total={data?.pagination?.totalItem}
           current={page}
           pageSize={10}
           onChange={(currentPage) => setPage(currentPage)}

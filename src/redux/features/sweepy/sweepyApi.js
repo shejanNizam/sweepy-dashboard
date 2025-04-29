@@ -14,11 +14,18 @@ export const sweepyApi = baseApi.injectEndpoints({
           status,
         },
       }),
-      providesTags: ["common"],
+      providesTags: ["sweepy"],
     }),
-
+    addSweepy: builder.mutation({
+      query: (data) => ({
+        url: "/admin/add-sweepstake",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["sweepy"],
+    }),
     // lzkdgvon
   }),
 });
 
-export const { useGetAllSweepyQuery } = sweepyApi;
+export const { useGetAllSweepyQuery, useAddSweepyMutation } = sweepyApi;

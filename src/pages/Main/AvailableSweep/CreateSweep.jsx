@@ -12,6 +12,7 @@ import {
   Tag,
 } from "antd";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
+import { useAddSweepyMutation } from "../../../redux/features/sweepy/sweepyApi";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -25,9 +26,20 @@ const CreateSweep = () => {
     "Red",
     "Gray",
   ]);
+  const [addSweepy, { isLoading }] = useAddSweepyMutation();
 
-  const handleFinish = (values) => {
+  const handleFinish = async (values) => {
     console.log("Form Values:", values);
+    const formdData = new FormData();
+    for (const key in values) {
+      formdData.append(key, values[key]);
+    }
+    try {
+      await addSweepy(formdData).unwrap();
+      console.log("successfully added");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
