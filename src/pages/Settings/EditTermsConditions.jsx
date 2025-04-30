@@ -1,61 +1,102 @@
-import { Button, message } from "antd";
-import { useState } from "react";
+import { Button, message, Spin } from "antd";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../../Components/PageHeading";
+import { useGetTermsQuery, useUpdateTermsMutation } from "../../redux/features/setting/settingApi";
+
 
 const EditTermsConditions = () => {
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false); // for tracking loading state
+  const [description, setDescription] = useState("");
+  const [isContentChanged, setIsContentChanged] = useState(false);
+
+  const { data, isLoading } = useGetTermsQuery();
+  const [editTerms, { isLoading: isUpdating }] = useUpdateTermsMutation();
+
+  const placeholder = "Enter your about us content here...";
+
+  useEffect(() => {
+    if (data?.data?.description) {
+      setDescription(data.data.description);
+    }
+  }, [data]);
+
+  const handleDescriptionChange = (content) => {
+    setDescription(content);
+    setIsContentChanged(true);
+  };
 
   const handleSaveChanges = async () => {
-    if (!content.trim()) {
-      message.error("Terms & Conditions content cannot be empty!");
+    const trimmedDescription = description.trim();
+
+    if (!trimmedDescription) {
+      message.error("Description cannot be empty");
       return;
     }
 
-    setLoading(true);
-
     try {
-      // Simulating a save action (e.g., an API call)
-      // Replace this with actual API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      message.success("Changes saved successfully!");
-      navigate("/settings/terms-conditions"); // Navigate back after saving
+      const response = await editTerms({
+        data: {
+          description: trimmedDescription,
+        },
+      }).unwrap();
+
+      message.success(
+        response.message || response.data.message || "Updated Successfully!"
+      );
+      navigate("/settings/terms-conditions");
     } catch (error) {
-      message.error("Failed to save changes. Please try again.");
-    } finally {
-      setLoading(false);
+      message.error(error?.data?.message || "Failed to update about section");
     }
   };
 
-  return (
-    <div className="min-h-[75vh] flex flex-col justify-between gap-6">
-      <div className="space-y-6">
-        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
-          <h2 className="text-2xl font-semibold">Edit Terms & Conditions</h2>
-        </div>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
+  }
 
-        <div className="h-full">
+  return (
+    <div className="min-h-[80vh] flex flex-col justify-between gap-6">
+      <div className="space-y-6">
+        <PageHeading
+          title={"Edit Terms & Conditions"}
+          backPath={-1}
+          className={"text-button"}
+        />
+
+        <div className="min-h-[60vh] bg-white rounded-lg shadow-xl p-4">
           <ReactQuill
-            placeholder="Enter your updated terms & conditions..."
+            placeholder={placeholder}
             theme="snow"
-            value={content}
-            onChange={(value) => setContent(value)}
-            className="h-[50vh] bg-white"
+            value={description}
+            onChange={handleDescriptionChange}
+            className="h-[50vh]"
+            modules={{
+              toolbar: [
+                [{ header: [1, 2, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image"],
+                ["clean"],
+              ],
+            }}
           />
         </div>
       </div>
-      <div className="flex justify-end">
+
+      <div className="flex justify-end gap-4 mt-6">
         <Button
           size="large"
           type="primary"
-          htmlType="submit"
-          className="px-8 w-[250px]"
           onClick={handleSaveChanges}
-          loading={loading} // Show loading spinner when saving
+          className="px-8 w-[250px]"
+          loading={isUpdating}
+          disabled={isUpdating || !isContentChanged || !description.trim()}
         >
           Save Changes
         </Button>

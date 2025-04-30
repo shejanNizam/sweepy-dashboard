@@ -4,3 +4,6 @@
 body {
   background-color: #fffaf4 !important;
 }
+.no-tailwind * {
+  all: revert !important;
+}

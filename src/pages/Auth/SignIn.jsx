@@ -2,7 +2,7 @@ import { Button, Checkbox, Input } from "antd";
 import Form from "antd/es/form/Form";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo_image from "../../assets/images/logo_sign_in.png";
+import logo_image from "../../../public/assets/images/logo.svg";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { setLogin } from "../../redux/slices/authSlice";
 import { ErrorSwal, SuccessSwal } from "../../utils/allSwalFire";
@@ -49,8 +49,9 @@ const SignIn = () => {
   return (
     <div className="min-h-[92vh] w-full grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-1 lg:gap-8 bg-white">
       {/* Logo Section */}
-      <div className="lg:border-r-2 border-gray mx-auto w-[70%] lg:p-[25%] lg:pr-[25%]">
+      <div className="lg:border-r-2 border-gray mx-auto w-[100%] lg:p-[25%] lg:pr-[25%]">
         <img src={logo_image} alt="App Logo" />
+        <p className="text-center font-bold text-xl">Win More, Play More</p>
       </div>
 
       {/* Login Form Section */}

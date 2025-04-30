@@ -2,14 +2,23 @@ import { Avatar, Button, Form, Input, Table } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useGetAllSweepyQuery } from "../../../redux/features/sweepy/sweepyApi";
 
 export default function AvailableSweep() {
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
-  const [searchName, setSearchName] = useState("");
-
   const navigate = useNavigate(); // Initialize useNavigate
-
   const [form] = Form.useForm();
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+  const [searchName, setSearchName] = useState("");
+  const {
+    data: sweepyData,
+    isError,
+    isLoading,
+  } = useGetAllSweepyQuery({
+    search: searchName,
+    page: pagination.current,
+    status: "active",
+  });
+  console.log(sweepyData);
 
   // Sample data structure for the products
   const data = [
@@ -63,14 +72,6 @@ export default function AvailableSweep() {
     },
   ];
 
-  const handleTableChange = (pag) => {
-    setPagination({
-      ...pagination,
-      current: pag.current,
-      pageSize: pag.pageSize,
-    });
-  };
-
   const handleShowDetails = (id) => {
     // Use navigate to go to the winner details page and pass the id as part of the URL
     navigate(`/available-sweep/${id}`);
@@ -87,18 +88,20 @@ export default function AvailableSweep() {
     {
       title: "Image",
       key: "image",
-      render: () => (
+      render: (record) => {
+        console.log(record);
+
         <Avatar
           src="https://via.placeholder.com/150" // Placeholder image for now
           size={40}
-        />
-      ),
+        />;
+      },
       align: "center",
     },
     {
       title: "Product Name",
-      dataIndex: "productName",
-      key: "productName",
+      dataIndex: "name",
+      key: "name",
       align: "center",
     },
     {
@@ -109,14 +112,14 @@ export default function AvailableSweep() {
     },
     {
       title: "Boost Price",
-      dataIndex: "boostPrice",
-      key: "boostPrice",
+      dataIndex: "boots_price",
+      key: "boots_price",
       align: "center",
     },
     {
       title: "Participate",
-      dataIndex: "participate",
-      key: "participate",
+      dataIndex: "participants",
+      key: "participants",
       align: "center",
     },
     {
@@ -133,7 +136,7 @@ export default function AvailableSweep() {
         <Button
           type="primary"
           shape="round"
-          onClick={() => handleShowDetails(record.id)} // Pass id to navigate
+          onClick={() => handleShowDetails(record._id)} // Pass id to navigate
         >
           See Details
         </Button>
@@ -145,7 +148,7 @@ export default function AvailableSweep() {
   return (
     <div className="bg-white rounded-lg">
       <div className="flex justify-end py-4 px-5">
-        <Link to={"/create-sweep"}>
+        <Link to={"create-sweep"}>
           <Button
             type="primary"
             icon={<i className="fas fa-plus"></i>}
@@ -171,17 +174,24 @@ export default function AvailableSweep() {
       </div>
 
       <Table
+        loading={isLoading}
         columns={columns}
-        dataSource={data}
+        dataSource={sweepyData?.data}
         rowKey={(record) => record.id}
         pagination={{
           current: pagination.current,
           pageSize: pagination.pageSize,
-          total: data.length,
+          total: sweepyData?.pagination?.totalItem,
           showSizeChanger: true,
           pageSizeOptions: ["5", "10", "20", "30", "40", "50"],
+          align: "center",
         }}
-        onChange={handleTableChange}
+        onChange={(page) =>
+          setPagination({
+            ...pagination,
+            current: page,
+          })
+        }
         className="mt-4"
       />
     </div>

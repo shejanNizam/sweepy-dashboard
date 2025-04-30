@@ -1,32 +1,35 @@
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../../Components/PageHeading";
-import { useGetPrivacyQuery } from "../../redux/features/common/commonApi";
+import { useGetPrivacyQuery } from "../../redux/features/setting/settingApi";
+
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
-  const { data: privacy, isFetching } = useGetPrivacyQuery();
-  if (isFetching) return <>Loading...</>;
-  // Directly use the description in JSX
-  const description = privacy?.data?.description;
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+
+  const { data, isLoading } = useGetPrivacyQuery();
+  console.log(data?.data);
 
   return (
     <div className="min-h-[70vh] flex flex-col justify-between">
       <div className="space-y-4">
-        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
-          <h2 className="text-2xl font-semibold">Privacy Policy</h2>
-        </div>
+        <PageHeading
+          title={"Privacy Policy"}
+          disbaledBackBtn={true}
+          className={"text-button"}
+        />
 
-        <div className="w-full bg-white rounded-2xl min-h-[60vh]">
-          <div className="space-y-4 p-10">
-            <p
-              dangerouslySetInnerHTML={{ __html: description }}
-              className="text-[#464343]"
-            ></p>
-          </div>
+        <div className="w-full bg-white rounded-2xl min-h-[60vh] p-5">
+          {isLoading ? (
+            <div className="h-[60vh] w-full flex justify-center items-center">
+              <Spin size="large" />
+            </div>
+          ) : (
+            <div
+              className="no-tailwind"
+              dangerouslySetInnerHTML={{ __html: data?.data?.description }}
+            />
+          )}
         </div>
 
         <div className="flex justify-end pt-5">

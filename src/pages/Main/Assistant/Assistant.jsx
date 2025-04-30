@@ -13,33 +13,58 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa"; // Importing icons for social media
 import { IoSearch } from "react-icons/io5";
-import { useGetAllAssistantQuery } from "../../../redux/features/common/commonApi";
+import {
+  useAddAssistantMutation,
+  useDeleteAssistantMutation,
+  useGetAllAssistantQuery,
+} from "../../../redux/features/common/commonApi";
+import { ErrorSwal, SuccessSwal } from "../../../utils/allSwalFire";
 
 export default function Assistant() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
   const [page, setPage] = useState(1);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [date, setDate] = useState("");
   const [form] = Form.useForm();
+  const [search, setSearch] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { data, isFetching } = useGetAllAssistantQuery();
-  if (isFetching) return <>Loading..</>;
+  const { data, isFetching } = useGetAllAssistantQuery(search);
+  const [deleteAsistant, { isLoading: deleteLoading }] =
+    useDeleteAssistantMutation();
+  const [addAssistant, { isLoading: addLoading }] = useAddAssistantMutation();
+  // if (isFetching) return <>Loading..</>;
   const handleAddCategory = async () => {
     try {
-      // setIsModalVisible(true);
+      const data = {
+        name,
+        email,
+        password,
+      };
+      console.log(data);
 
-      // Simulate an API response
-      const response = { message: "Category added successfully" };
-      SuccessSwal({
-        title: "",
-        text: response.message || "Category added successfully",
-      });
-      setIsModalVisible(false);
+      const response = await addAssistant(data);
+
+      if (response?.data?.success) {
+        // Display success message with the response message
+        SuccessSwal({
+          title: "Assistant Add Successfully",
+          // text: response?.message?.message || "Category deleted successfully",
+        });
+
+        // Hide the delete modal on success
+        setIsModalVisible(false);
+        setModalData(null);
+      } else {
+        // Handle unexpected responses
+        throw new Error(response?.error?.data?.errorType);
+      }
     } catch (error) {
       ErrorSwal({
         title: "",
-        text: error?.message || "Failed to add category",
+        text: error?.message || "Failed to update category",
       });
     }
   };
@@ -61,7 +86,21 @@ export default function Assistant() {
   //   ],
   //   pagination: { totalData: 10 },
   // };
-
+  const handleDelete = async () => {
+    try {
+      const response = await deleteAsistant({ id: modalData.id }).unwrap();
+      SuccessSwal({
+        title: "Success",
+        text: response.message || "Successfully deleted!",
+      });
+      setIsModalOpen(false);
+    } catch (error) {
+      ErrorSwal({
+        title: "",
+        text: error?.data?.message || error?.data || "Something went wrong!",
+      });
+    }
+  };
   const columns = [
     {
       title: "#Tr.ID",
@@ -106,9 +145,9 @@ export default function Assistant() {
     setModalData(data);
   };
 
-  const onChangeDate = (date, dateString) => {
-    setDate(dateString);
-  };
+  // const onChangeDate = (date, dateString) => {
+  //   setDate(dateString);
+  // };
 
   const isLoading = false;
   const error = null;
@@ -125,12 +164,12 @@ export default function Assistant() {
     return <div>Error loading client data.</div>;
   }
 
-  const paginatedData = data.data.slice((page - 1) * 10, page * 10);
+  const paginatedData = data?.data?.slice((page - 1) * 10, page * 10);
 
-  const filteredData = paginatedData.filter((item) => {
+  const filteredData = paginatedData?.filter((item) => {
     return (
-      item.name.toLowerCase().includes(name.toLowerCase()) &&
-      item.email.toLowerCase().includes(date.toLowerCase())
+      item?.name?.toLowerCase().includes(name?.toLowerCase()) &&
+      item?.email?.toLowerCase().includes(date?.toLowerCase())
     );
   });
 
@@ -155,29 +194,24 @@ export default function Assistant() {
       >
         <div className="space-y-4">
           <Input
-            value={"name"}
+            value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your name"
             className="mt-2 py-2"
           />
           <Input
-            value={"email"}
-            onChange={(e) => setName(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email"
             className="mt-2 py-2"
           />
           <Input
-            value={"Password"}
-            onChange={(e) => setName(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             className="mt-2 py-2"
           />
-          <Input
-            value={"Confrim Password"}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Confrim password"
-            className="mt-2 py-2"
-          />
+
           <Button
             type="primary"
             onClick={handleAddCategory}
@@ -192,8 +226,8 @@ export default function Assistant() {
           <h3 className="text-2xl text-white font-semibold">All Assistant</h3>
           <div className="flex justify-around gap-4">
             <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="focus:outline-none outline-none rounded-full px-4 text-sm w-40"
               placeholder="Name"
             />
@@ -209,7 +243,7 @@ export default function Assistant() {
 
         <Table
           columns={columns}
-          dataSource={filteredData.length > 0 ? filteredData : []}
+          dataSource={filteredData?.length > 0 ? filteredData : []}
           pagination={false}
           className="mt-4"
         />
@@ -220,7 +254,7 @@ export default function Assistant() {
           defaultCurrent={1}
           showQuickJumper={true}
           showSizeChanger={false}
-          total={data.pagination.totalData}
+          total={data?.pagination?.totalData}
           current={page}
           pageSize={10}
           onChange={(currentPage) => setPage(currentPage)}
@@ -230,7 +264,7 @@ export default function Assistant() {
 
       {/* Modal for user details */}
       <Modal
-        title={`Remove Assistant - ${modalData.name}`}
+        title={`Remove Assistant - ${modalData?.name}`}
         visible={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={[
@@ -238,9 +272,10 @@ export default function Assistant() {
             Cancel
           </Button>,
           <Button
+            loading={deleteLoading}
             className="bg-red-500 text-white"
             key="ok"
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleDelete}
           >
             Remove
           </Button>,

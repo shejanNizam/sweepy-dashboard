@@ -1,48 +1,102 @@
-import { Button } from "antd";
-import { useState } from "react";
+import { Button, message, Spin } from "antd";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../../Components/PageHeading";
+import { useGetAboutQuery, useUpdateAboutMutation } from "../../redux/features/setting/settingApi";
+
 
 const EditAbout = () => {
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
+  const [isContentChanged, setIsContentChanged] = useState(false);
 
-  const placeholder = "Enter your updated privacy policy...";
+  const { data, isLoading } = useGetAboutQuery();
+  const [editAbout, { isLoading: isUpdating }] = useUpdateAboutMutation();
 
-  const handleSaveChanges = () => {
-    // Handle save functionality, possibly submit the form or send an API request
-    console.log("Updated content:", content);
-    // After saving, you might navigate to a different page
-    navigate("/settings/privacy-policy");
+  const placeholder = "Enter your about us description here...";
+
+  useEffect(() => {
+    if (data?.data?.description) {
+      setDescription(data.data.description);
+    }
+  }, [data]);
+
+  const handleDescriptionChange = (description) => {
+    setDescription(description);
+    setIsContentChanged(true);
   };
 
-  return (
-    <div className="min-h-[75vh] flex flex-col justify-between gap-6">
-      <div className="space-y-6">
-        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
-          <h2 className="text-2xl font-semibold">Edit About Us</h2>
-        </div>
+  const handleSaveChanges = async () => {
+    const trimmedDescription = description.trim();
 
-        <div className="h-full">
+    if (!trimmedDescription) {
+      message.error("Description cannot be empty");
+      return;
+    }
+
+    try {
+      const response = await editAbout({
+        data: {
+          description: trimmedDescription,
+        },
+      }).unwrap();
+
+      message.success(
+        response.message || response.data.message || "Updated Successfully!"
+      );
+      navigate("/settings/about-us");
+    } catch (error) {
+      message.error(error?.data?.message || "Failed to update about section");
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  return (
+    <div className=" flex flex-col justify-between gap-6">
+      <div className="space-y-6">
+        <PageHeading
+          title={"Edit About Us"}
+          backPath={-1}
+          className={"text-button"}
+        />
+
+        <div className="min-h-[60vh] bg-white rounded-lg shadow-xl p-4">
           <ReactQuill
             placeholder={placeholder}
             theme="snow"
-            value={content}
-            onChange={setContent}
-            className="h-[50vh] bg-white"
+            value={description}
+            onChange={handleDescriptionChange}
+            className="h-[50vh]"
+            modules={{
+              toolbar: [
+                [{ header: [1, 2, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image"],
+                ["clean"],
+              ],
+            }}
           />
         </div>
       </div>
 
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-end gap-4 mt-6">
         <Button
           size="large"
           type="primary"
-          htmlType="submit"
           onClick={handleSaveChanges}
           className="px-8 w-[250px]"
+          loading={isUpdating}
+          disabled={isUpdating || !isContentChanged || !description.trim()}
         >
           Save Changes
         </Button>

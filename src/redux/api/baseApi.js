@@ -23,7 +23,7 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["auth", "common", "category", "sweepy"],
+  tagTypes: ["auth", "common", "category", "sweepy", "advertisements", "assistant", "settings"],
   endpoints: () => ({}),
 });
 

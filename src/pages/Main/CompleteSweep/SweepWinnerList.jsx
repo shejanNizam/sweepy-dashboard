@@ -13,7 +13,8 @@ export default function SweepWinnerList() {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
   const [selectedWinner, setSelectedWinner] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const {data:updateData,isLoading,isError} = useGetWinnerListQuery(id)
+  const { data: updateData, isLoading, isError } = useGetWinnerListQuery(id);
+  
 
   const winnerData = [
     {
@@ -51,9 +52,9 @@ export default function SweepWinnerList() {
     });
   };
 
-  const handleShowDetails = (id) => {
-    const winner = winnerData.find((item) => item.id === id);
-    setSelectedWinner(winner);
+  const handleShowDetails = (pData) => {
+    // const winner = winnerData.find((item) => item.id === id);
+    setSelectedWinner(pData);
     setIsModalVisible(true); // Show modal when "See Details" is clicked
   };
 
@@ -83,8 +84,8 @@ export default function SweepWinnerList() {
     },
     {
       title: "Joining Date",
-      dataIndex: "joiningDate",
-      key: "joiningDate",
+      dataIndex: "joining_date",
+      key: "joining_date",
       render: (text) => dayjs(text).format("MM-DD-YY"),
       align: "center",
     },
@@ -95,7 +96,7 @@ export default function SweepWinnerList() {
         <Button
           type="primary"
           shape="round"
-          onClick={() => handleShowDetails(record.id)} // Show winner details modal
+          onClick={() => handleShowDetails(record)} // Show winner details modal
         >
           See Details
         </Button>
@@ -115,6 +116,7 @@ export default function SweepWinnerList() {
       {/* <h3 className="text-2xl font-semibold mb-4">Winner List</h3> */}
 
       <Table
+        loading={isLoading}
         columns={columns}
         dataSource={updateData?.data}
         rowKey={(record) => record.id}
@@ -131,26 +133,34 @@ export default function SweepWinnerList() {
 
       {/* Modal to show winner details */}
       <Modal
-        centered
         title={`User Information - ${selectedWinner?.name}`}
-        visible={isModalVisible}
-        onCancel={handleModalClose}
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
         footer={[
-          <Button key="back" onClick={handleModalClose}>
+          <Button key="back" onClick={() => setIsModalVisible(false)}>
             OK
           </Button>,
         ]}
+        centered
         width={500}
       >
         <div className="flex justify-center">
-          <Avatar src={selectedWinner?.profileImage} size={80} />
+          <Avatar
+            src={
+              selectedWinner?.image
+                ? selectedWinner?.image
+                : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
+            }
+            size={80}
+          />
         </div>
-        <div className="mt-4">
+
+        <div className="space-y-4">
           <p>
-            <strong>Si No.:</strong> #{selectedWinner?.id}
+            <strong>SI No.:</strong> #{selectedWinner?.id}
           </p>
           <p>
-            <strong>Full name:</strong> {selectedWinner?.name}
+            <strong>Full Name:</strong> {selectedWinner?.name}
           </p>
           <p>
             <strong>Email:</strong> {selectedWinner?.email}
@@ -158,9 +168,20 @@ export default function SweepWinnerList() {
           <p>
             <strong>Phone:</strong> {selectedWinner?.phone}
           </p>
+
           <div className="flex justify-center gap-4 mt-4">
-            <Button shape="circle" icon={<FaFacebook />} />
-            <Button shape="circle" icon={<FaInstagram />} />
+            <a
+              href={`https://www.${selectedWinner?.facebookLink}`}
+              target="_blank"
+            >
+              <Button shape="circle" icon={<FaFacebook />} />
+            </a>
+            <a
+              href={`https://www.${selectedWinner?.instagramLink}`}
+              target="_blank"
+            >
+              <Button shape="circle" icon={<FaInstagram />} />
+            </a>
           </div>
         </div>
       </Modal>

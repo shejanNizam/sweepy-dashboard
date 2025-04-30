@@ -16,25 +16,22 @@ import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import { useAddSweepyMutation } from "../../../redux/features/sweepy/sweepyApi";
 import { useGetCategoryQuery } from "../../../redux/features/common/commonApi";
 import moment from "moment/moment";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateSweep = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [hasOptions, setHasOptions] = useState(true);
-  const [sizeOptions, setSizeOptions] = useState(["S", "M", "L", "XL"]);
-  const [colorOptions, setColorOptions] = useState([
-    "White",
-    "Black",
-    "Red",
-    "Gray",
-  ]);
+  const sizeOptions = ["S", "M", "L", "XL"];
+  const colorOptions = ["White", "Black", "Red", "Gray"];
   const [addSweepy, { isLoading }] = useAddSweepyMutation();
   const [search, setSearch] = useState("");
   const { data: dbCategorys } = useGetCategoryQuery({ search });
   const handleFinish = async (values) => {
     const formData = new FormData();
-
     // Fix 1: Handle deadline date conversion properly
     if (values.deadline) {
       const formattedDate = values.deadline.format("YYYY-MM-DD");
@@ -52,7 +49,7 @@ const CreateSweep = () => {
 
     // Handle other fields
     Object.entries(values).forEach(([key, value]) => {
-      if (!["size", "color", "dateline"].includes(key)) {
+      if (!["size", "color"].includes(key)) {
         // Fix 2: Exclude deadline from general handling
         if (key === "image") {
           if (value && value.length > 0) {
@@ -67,6 +64,7 @@ const CreateSweep = () => {
     try {
       await addSweepy(formData).unwrap();
       message.success("New Sweepstake added successfully.");
+      navigate("/available-sweep");
     } catch (error) {
       message.error(error?.message || "Something went wrong.");
     }
@@ -78,6 +76,7 @@ const CreateSweep = () => {
         <h2 className="text-2xl font-semibold">Add Sweepstakes</h2>
       </div>
       <Form
+        form={form}
         layout="vertical"
         onFinish={handleFinish}
         className="bg-white"
@@ -145,7 +144,7 @@ const CreateSweep = () => {
                   <Select
                     mode="multiple"
                     placeholder="Select sizes"
-                    defaultValue={sizeOptions}
+                    // defaultValue={sizeOptions}
                     options={sizeOptions.map((size) => ({
                       label: size,
                       value: size,
@@ -157,7 +156,7 @@ const CreateSweep = () => {
                   <Select
                     mode="multiple"
                     placeholder="Select colors"
-                    defaultValue={colorOptions}
+                    // defaultValue={colorOptions}
                     options={colorOptions.map((color) => ({
                       label: color,
                       value: color,

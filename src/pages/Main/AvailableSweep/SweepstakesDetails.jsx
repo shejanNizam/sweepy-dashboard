@@ -1,110 +1,94 @@
-import { Divider } from "antd";
+import React from "react";
+import { Card, Col, Row, Typography, Divider } from "antd";
+import { Image } from "antd";
+import { useParams } from "react-router-dom";
+import { useGetSweepyDetailsQuery } from "../../../redux/features/sweepy/sweepyApi";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Import useParams to get ID from URL
+const { Title, Paragraph } = Typography;
 
-const sweepstakesData = [
-  {
-    id: "1",
-    productName: "T-shirt 95",
-    category: "Cloths",
-    boostPrice: "$30",
-    deadline: "2025-03-23",
-    winnerReveal: "Within the next 14 to 30 days",
-    availableSizes: ["S", "M", "L", "XL", "XXL"],
-    availableColors: ["White", "Black", "Red", "Blue"],
-    winner: 1,
-    brand: "Nike",
-    description: `A T-shirt is a casual, lightweight garment typically made from soft cotton or cotton-blend fabric. It has short sleeves, a round neckline, and no collar, offering comfort and ease of movement. T-shirts are popular for everyday wear and come in a wide range of styles, from basic solid colors to graphic prints, logos, or patterns. They are versatile, easy to layer, and can be dressed up or down depending on the occasion.`,
-    image: "https://via.placeholder.com/400x400?text=T-shirt+95", // Placeholder image
-  },
-];
+const BASE_URL = import.meta.env.VITE_IMAGE_URL;
 
-export default function SweepstakesDetails() {
-  const { id } = useParams(); // Get the ID of the selected sweepstake from the URL
-  const [sweepstake, setSweepstake] = useState(null);
-
-  useEffect(() => {
-    const selectedSweepstake = sweepstakesData.find((item) => item.id === id);
-    setSweepstake(selectedSweepstake);
-  }, [id]);
-
-  if (!sweepstake) {
+const SweepstakesDetails = () => {
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetSweepyDetailsQuery({ id });
+  if (isLoading) {
     return <div>Loading...</div>;
+  } else if (isError) {
+    return <div>Something went wrong!</div>;
   }
-
   return (
-    <div className="p-8 bg-white shadow-lg rounded-lg max-w-4xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-6 text-center">
-        Sweepstakes Details
-      </h2>
+    <div className="p-8">
+      <Card className="shadow-sm border rounded-md">
+        <Row gutter={16}>
+          {/* Image Section */}
+          <Col span={12}>
+            <Image
+              src={
+                data?.data?.image
+                  ? `${BASE_URL}${data?.data?.image}`
+                  : "https://dummyimage.com/600x400/000/fff"
+              }
+              alt="T-shirt Design"
+              className="w-full h-auto rounded-lg"
+            />
+          </Col>
 
-      <div className="flex gap-10">
-        {/* Product Image */}
-        <div className="flex-shrink-0 w-1/3">
-          <img
-            src={sweepstake.image}
-            alt={sweepstake.productName}
-            className="w-full rounded-lg shadow-md"
-          />
-        </div>
+          {/* Details Section */}
+          <Col span={12}>
+            <div className="mb-7">
+              <Title level={2}>{data?.data?.name}</Title>
+              <strong className="block mb-3">Brand: {data?.data?.brand}</strong>
+              <Paragraph>{data?.data?.description}</Paragraph>
+            </div>
+            <Divider />
 
-        {/* Product Info */}
-        <div className="flex-1">
-          <div className="mb-4">
-            <h3 className="text-2xl font-semibold text-gray-800">
-              {sweepstake.productName}
-            </h3>
-            <p className="text-gray-500">Category: {sweepstake.category}</p>
-          </div>
+            {/* Product Information */}
+            <div className="mb-5">
+              <strong>Product Name: </strong> {data?.data?.name}
+            </div>
+            <div className="mb-5">
+              <strong>Select Category: </strong> {data?.data?.category}
+            </div>
+            <div className="mb-5">
+              <strong>Boast Price: </strong> {data?.data?.boost_price}
+            </div>
+            <div className="mb-5">
+              <strong>Deadline: </strong>{" "}
+              {dayjs(data?.data?.dateline).format("MM-DD-YY")}
+            </div>
 
-          <Divider />
+            {/* Available Sizes */}
+            <div className="mb-5">
+              <strong>Available Size: </strong>{" "}
+              {data?.data?.size?.map((size, index) => (
+                <span key={index} className="bg-green-200 px-3.5 py-1 mx-2">
+                  {size}
+                </span>
+              ))}
+            </div>
 
-          <div className="space-y-3">
-            <p>
-              <strong>Boost Price:</strong> {sweepstake.boostPrice}
-            </p>
-            <p>
-              <strong>Deadline:</strong>{" "}
-              {dayjs(sweepstake.deadline).format("MMMM D, YYYY")}
-            </p>
-            <p>
-              <strong>Winner Reveal:</strong> {sweepstake.winnerReveal}
-            </p>
-            <p>
-              <strong>Winner (Person):</strong> {sweepstake.winner}
-            </p>
-          </div>
+            {/* Available Colors */}
+            <div className="mb-5">
+              <strong>Available Colors: </strong>{" "}
+              {data?.data?.color?.map((color, index) => (
+                <span key={index} className="bg-blue-50 px-3.5 py-1 mx-2">
+                  {color}
+                </span>
+              ))}
+            </div>
 
-          <Divider />
-
-          <div className="space-y-3">
-            <p>
-              <strong>Available Sizes:</strong>{" "}
-              {sweepstake.availableSizes.join(", ")}
-            </p>
-            <p>
-              <strong>Available Colors:</strong>{" "}
-              {sweepstake.availableColors.join(", ")}
-            </p>
-          </div>
-
-          <Divider />
-
-          {/* Product Description */}
-          <div className="space-y-3">
-            <p>
-              <strong>Brand:</strong> {sweepstake.brand}
-            </p>
-            <p>
-              <strong>Description:</strong>
-            </p>
-            <p>{sweepstake.description}</p>
-          </div>
-
-          <Divider />
-        </div>
-      </div>
+            {/* Winner Information */}
+            <div className="mb-5">
+              <strong>Winner (Person): </strong> {data?.data?.winner_count}
+            </div>
+            <div className="mb-5">
+              <strong>Winner Reveal: </strong> {data?.data?.winner_revel_date || "N/A"}
+            </div>
+          </Col>
+        </Row>
+      </Card>
     </div>
   );
-}
+};
+
+export default SweepstakesDetails;

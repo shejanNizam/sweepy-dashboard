@@ -81,15 +81,6 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["category"],
     }),
 
-    // complete sweepy
-    getSweepy: builder.query({
-      query: ({ search, page, limit }) => ({
-        url: `/admin/get-sweepstake?page=${page}&limit=${limit}&name=${search}&status=completed`,
-        method: "GET",
-      }),
-      providesTags: ["category"],
-    }),
-
     // Earning in DashboardHome page
     getEarnings: builder.query({
       query: (year) => ({
@@ -166,14 +157,7 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
-    // get all Advertisements
-    getAllAdvertisements: builder.query({
-      query: () => ({
-        url: "/admin/get-advertisements",
-        method: "GET",
-      }),
-      providesTags: ["advertisements"],
-    }),
+
     // get all earnings
     getAllEarnings: builder.query({
       query: () => ({
@@ -194,13 +178,27 @@ export const userApi = baseApi.injectEndpoints({
 
     // get all assistant
     getAllAssistant: builder.query({
-      query: () => ({
-        url: "/admin/get-assistants",
+      query: (search) => ({
+        url: `/admin/get-assistants?searchQ=${search}`,
         method: "GET",
       }),
       providesTags: ["assistant"],
     }),
-
+    addAssistant: builder.mutation({
+      query: (data) => ({
+        url: `/admin/add-assistant`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["assistant"],
+    }),
+    deleteAssistant: builder.mutation({
+      query: ({ id }) => ({
+        url: `/admin/delete-assistant/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["assistant"],
+    }),
     // get about us
     getAboutUs: builder.query({
       query: () => ({
@@ -278,7 +276,6 @@ export const {
   useGetTotalPropertySummaryQuery,
   useGetCategoryQuery,
   useEditCategoryMutation,
-  useGetAllAdvertisementsQuery,
   useGetAllAssistantQuery,
   useDeleteCategoryMutation,
   useGetAllEarningsQuery,
@@ -290,6 +287,7 @@ export const {
   useGetTermsQuery,
   useGetBadgeNotificationQuery,
   useAddCategoryMutation,
-  useGetSweepyQuery,
-  useGetWinnerListQuery
+  useGetWinnerListQuery,
+  useDeleteAssistantMutation,
+  useAddAssistantMutation,
 } = userApi;

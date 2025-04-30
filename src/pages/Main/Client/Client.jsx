@@ -111,10 +111,10 @@ export default function Client() {
   if (error) {
     return <div>Error loading client data.</div>;
   }
-  console.log(data.pagination);
+
   const paginatedData = data?.data?.slice((page - 1) * 10, page * 10);
 
-  const filteredData = paginatedData.filter((item) => {
+  const filteredData = paginatedData?.filter((item) => {
     return (
       item.name.toLowerCase().includes(name.toLowerCase()) &&
       item.email.toLowerCase().includes(date.toLowerCase())
@@ -151,7 +151,7 @@ export default function Client() {
 
         <Table
           columns={columns}
-          dataSource={filteredData.length > 0 ? filteredData : []}
+          dataSource={filteredData?.length > 0 ? filteredData : []}
           pagination={false}
           className="mt-4"
         />
@@ -173,7 +173,7 @@ export default function Client() {
       {/* Modal for user details */}
       <Modal
         title={`User Information - ${modalData.name}`}
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={[
           <Button key="back" onClick={() => setIsModalOpen(false)}>
@@ -209,10 +209,10 @@ export default function Client() {
           </p>
 
           <div className="flex justify-center gap-4 mt-4">
-            <a href={`https://www.${modalData?.facebookLink}`} target="_blank">
+            <a href={`${modalData?.facebookLink}`} target="_blank">
               <Button shape="circle" icon={<FaFacebook />} />
             </a>
-            <a href={`https://www.${modalData?.instagramLink}`} target="_blank">
+            <a href={`${modalData?.instagramLink}`} target="_blank">
               <Button shape="circle" icon={<FaInstagram />} />
             </a>
           </div>

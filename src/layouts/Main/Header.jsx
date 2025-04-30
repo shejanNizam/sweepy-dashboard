@@ -8,6 +8,7 @@ import {
   useGetBadgeNotificationQuery,
   useGetMyProfileQuery,
 } from "../../redux/features/common/commonApi";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Header = () => {
   const [notificationPopup, setNotificationPopup] = useState(false);
   const { data, isFetching } = useGetBadgeNotificationQuery();
   const { data: profile } = useGetMyProfileQuery();
+
 
   // const notifications = [
   //   {

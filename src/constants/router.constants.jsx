@@ -46,10 +46,7 @@ export const dashboardItems = [
     path: "notifications",
     element: <Notifications />,
   },
-  {
-    path: "/create-sweep",
-    element: <CreateSweep />,
-  },
+
   {
     name: "Complete Sweep",
     path: "complete-sweep",
@@ -69,6 +66,10 @@ export const dashboardItems = [
   {
     path: "available-sweep/:id",
     element: <SweepstakesDetails />,
+  },
+  {
+    path: "/available-sweep/create-sweep",
+    element: <CreateSweep />,
   },
   {
     name: "Category",
@@ -106,6 +107,167 @@ export const dashboardItems = [
     icon: MdSupportAgent,
     element: <Assistant />,
   },
+  // {
+  //   path: "/beautician/:profileId",
+  //   element: <BeauticianDetails />,
+  // },
+  // {
+  //   name: "Earnings",
+  //   rootPath: "earnings",
+  //   icon: GrMoney,
+  //   children: [
+  //     {
+  //       name: "All Earning",
+  //       path: "earnings/all-earnings",
+  //       icon: LuWallet,
+  //       element: <Earnings />,
+  //     },
+  //     // {
+  //     //   name: "Withdraw",
+  //     //   path: "earnings/withdraw",
+  //     //   icon: PiHandWithdrawBold,
+  //     //   element: <Withdraw />,
+  //     // },
+  //   ],
+  // },
+  // {
+  //   name: "Venue Request",
+  //   path: "venue",
+  //   icon: BiMessage,
+  //   element: <VenueRequest />,
+  // },
+  // {
+  //   name: "All Venue",
+  //   path: "all-venue",
+  //   icon: BiCategoryAlt,
+  //   element: <AllVenue />,
+  // },
+  // {
+  //   name: "Add Venue",
+  //   path: "add-venue",
+  //   icon: RiApps2AddLine,
+  //   element: <AddVenue />,
+  // },
+  {
+    name: "Settings",
+    rootPath: "settings",
+    icon: CiSettings,
+    children: [
+      {
+        name: "Profile",
+        path: "settings/profile",
+        icon: CiUser,
+        element: <MyProfile />,
+      },
+      {
+        path: "settings/profile/edit",
+        element: <EditMyProfile />,
+      },
+      {
+        name: "About Us",
+        icon: CiCircleQuestion,
+        path: "settings/about-us",
+        element: <About />,
+      },
+      {
+        path: "settings/about-us/edit",
+        element: <EditAbout />,
+      },
+      {
+        name: "Terms & Services",
+        icon: FaServicestack,
+        path: "settings/terms-conditions",
+        element: <TermsConditions />,
+      },
+      {
+        path: "settings/terms-conditions/edit",
+        element: <EditTermsConditions />,
+      },
+      {
+        name: "Privacy Policy",
+        icon: MdOutlineSecurityUpdateWarning,
+        path: "settings/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "settings/privacy-policy/edit",
+        element: <EditPrivacyPolicy />,
+      },
+    ],
+  },
+];
+export const dashboardItemsAssistant = [
+  {
+    name: "Dashboard",
+    path: "/",
+    icon: RiDashboardHorizontalFill,
+    element: <DashboardHome />,
+  },
+  {
+    path: "notifications",
+    element: <Notifications />,
+  },
+
+  {
+    name: "Complete Sweep",
+    path: "complete-sweep",
+    icon: MdOutlineVerified,
+    element: <CompleteSweep />,
+  },
+  {
+    path: "complete-sweep/:id",
+    element: <SweepWinnerList />,
+  },
+  {
+    name: "Available Sweep",
+    path: "available-sweep",
+    icon: IoIosCard,
+    element: <AvailableSweep />,
+  },
+  {
+    path: "available-sweep/:id",
+    element: <SweepstakesDetails />,
+  },
+  {
+    path: "/available-sweep/create-sweep",
+    element: <CreateSweep />,
+  },
+  // {
+  //   name: "Category",
+  //   path: "category",
+  //   icon: BiCategoryAlt,
+  //   element: <Category />,
+  // },
+  // {
+  //   name: "Users",
+  //   path: "client",
+  //   icon: FaUsers,
+  //   element: <Client />,
+  // },
+  // {
+  //   name: "Advertisement",
+  //   path: "advertisement",
+  //   icon: RiAdvertisementLine,
+  //   element: <Advertisement />,
+  // },
+  // {
+  //   name: "Earnings",
+  //   path: "earnings",
+  //   icon: TbPigMoney,
+  //   element: <EarningHistory />,
+  // },
+  // {
+  //   name: "Suggestion",
+  //   path: "suggestion",
+  //   icon: FaRegLightbulb,
+  //   element: <Suggestion />,
+  // },
+  // {
+  //   name: "Assistant",
+  //   path: "assistant",
+  //   icon: MdSupportAgent,
+  //   element: <Assistant />,
+  // },
   // {
   //   path: "/beautician/:profileId",
   //   element: <BeauticianDetails />,

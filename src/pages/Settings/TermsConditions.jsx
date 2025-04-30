@@ -1,32 +1,35 @@
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "../../Components/PageHeading";
-import { useGetTermsQuery } from "../../redux/features/common/commonApi";
+import { useGetTermsQuery } from "../../redux/features/setting/settingApi";
+
 
 const TermsConditions = () => {
   const navigate = useNavigate();
-  const { data: terms, isFetching } = useGetTermsQuery();
-  if (isFetching) return <>Loading...</>;
-  // Directly use the description in JSX
-  const description = terms?.data?.description;
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const { data, isLoading } = useGetTermsQuery();
 
   return (
     <div className="min-h-[70vh] flex flex-col justify-between">
       <div className="space-y-4">
-        <div className="flex justify-between items-center bg-button p-4 rounded-t-md text-white">
-          <h2 className="text-2xl font-semibold">Terms & Conditions</h2>
-        </div>
+        <PageHeading
+          title={"Terms & Conditions"}
+          disbaledBackBtn={true}
+          className={"text-button"}
+        />
 
         <div className="w-full bg-white rounded-2xl min-h-[60vh]">
-          <div className="space-y-4 p-10">
-            <p
-              dangerouslySetInnerHTML={{ __html: description }}
-              className="text-[#464343]"
-            ></p>
+          <div className="w-full bg-white rounded-2xl min-h-[60vh] p-5">
+            {isLoading ? (
+              <div className="h-[60vh] w-full flex justify-center items-center">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div
+                className="no-tailwind"
+                dangerouslySetInnerHTML={{ __html: data?.data?.description }}
+              />
+            )}
           </div>
         </div>
 

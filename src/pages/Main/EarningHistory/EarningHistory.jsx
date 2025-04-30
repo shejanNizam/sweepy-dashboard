@@ -89,7 +89,7 @@ export default function EarningHistory() {
     page * 10
   );
 
-  const filteredData = paginatedData.filter((item) => {
+  const filteredData = paginatedData?.filter((item) => {
     return (
       item.transaction?.toLowerCase().includes(name?.toLowerCase()) &&
       item.createdAt?.toLowerCase().includes(date?.toLowerCase())
@@ -134,7 +134,7 @@ export default function EarningHistory() {
 
         <Table
           columns={columns}
-          dataSource={filteredData.length > 0 ? filteredData : []}
+          dataSource={filteredData?.length > 0 ? filteredData : []}
           pagination={false}
           className="mt-4"
         />
